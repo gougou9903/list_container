@@ -5,39 +5,20 @@ template <typename ContentsType>
 class ListNode {
 public:
     /**
-    * Constructor for empty element of the list, points to itself
+    * Constructs and empty element of the list, points to itself by default
     */
     ListNode();
 
     /**
-     * Constructor for element of the list, points to itself
+     * Constructs and element of the list, points to itself by default
      */
     ListNode(const ContentsType& _value);
 
-    /**
-     * @return Pointer to the element's value
-     */
     ContentsType* getValuePointer() const;
-
-    /**
-     * @return Pointer to the next node
-     */
     ListNode<ContentsType>* getNextNodePointer() const;
-
-    /**
-     * @return Pointer to the previous node
-     */
     ListNode<ContentsType>* getPreviousNodePointer() const;
-
-    /**
-     * @param Pointer to the new next node
-     */
-    void rewriteNextNodePointer(const ListNode<ContentsType>*);
-
-    /**
-     * @param Pointer to the new previous node
-     */
-    void rewritePreviousNodePointer(const ListNode<ContentsType>*);
+    void rewriteNextNodePointer(const ListNode<ContentsType>* nodePointer);
+    void rewritePreviousNodePointer(const ListNode<ContentsType>* nodePointer);
 
 private:
     ListNode<ContentsType>* nextNodePointer;
@@ -51,18 +32,18 @@ private:
 template <typename ContentsType> class List {
 public:
     /**
-     * Basic constructor, creates an empty list object
+     * Constructs an empty list
     */
     List();
 
     /**
-    * Basic constructor, creates a list object
+    * Constructs a list
     * @param _value Value saved in the first list node
     */
     List(const ContentsType& _value);
 
     /**
-     * Basic constructor, creates a list object
+     * Constructs a list
      * @param elementsNumber Number of list nodes
      * @param _value Value saved in all created list nodes
      */
@@ -76,6 +57,11 @@ public:
      * @param _value Value saved in the new list node
      */
     void push_front(const ContentsType& _value);
+
+    /**
+     * Add a node to the back of the list
+     * @param _value Value saved in the new list node
+     */
     void push_back(const ContentsType& _value);
 
 private:
