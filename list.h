@@ -13,12 +13,30 @@ public:
      * Constructor for element of the list, points to itself
      */
     ListNode(const ContentsType& _value);
-    // ListNode(const ContentsType& _value, ListNode* _nextNodePointer, ListNode* _previousNodePointer);
 
-    ContentsType* getValue() const;
+    /**
+     * @return Pointer to the element's value
+     */
+    ContentsType* getValuePointer() const;
+
+    /**
+     * @return Pointer to the next node
+     */
     ListNode<ContentsType>* getNextNodePointer() const;
+
+    /**
+     * @return Pointer to the previous node
+     */
     ListNode<ContentsType>* getPreviousNodePointer() const;
+
+    /**
+     * @param Pointer to the new next node
+     */
     void rewriteNextNodePointer(const ListNode<ContentsType>*);
+
+    /**
+     * @param Pointer to the new previous node
+     */
     void rewritePreviousNodePointer(const ListNode<ContentsType>*);
 
 private:
@@ -64,7 +82,3 @@ private:
     ListNode<ContentsType>* firstNodePointer;
     ListNode<ContentsType>* lastNodePointer;
 };
-
-
-
-

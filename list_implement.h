@@ -14,7 +14,7 @@ ListNode<ContentsType>::ListNode(const ContentsType& _value) :  value(_value)
                                                                 ,previousNodePointer(this) {}
 
 template <typename ContentsType>
-ContentsType* ListNode<ContentsType>::getValue() const {
+ContentsType* ListNode<ContentsType>::getValuePointer() const {
     return &value;
 }
 
