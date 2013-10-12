@@ -1,5 +1,9 @@
 // Small learning project aimed to learn more about C++ and STL
 
-#include <iostream>
+#include "list_implement.h"
 
-#include "list.h"
+int main() {
+    return 0;
+}
+
+// #include "list_implementation.h"
