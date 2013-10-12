@@ -13,5 +13,5 @@ create_build_dir:
 
 print:
 	@echo -------------------------------------------------
-	@echo ---                                           ---
+	@echo ---  Building list by github.com/SergNikitin/ ---
 	@echo -------------------------------------------------
