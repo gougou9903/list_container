@@ -41,14 +41,14 @@ public:
     * Basic constructor, creates a list object
     * @param _value Value saved in the first list node
     */
-    List(ContentsType _value);
+    List(const ContentsType& _value);
 
     /**
      * Basic constructor, creates a list object
      * @param elementsNumber Number of list nodes
      * @param _value Value saved in all created list nodes
      */
-    List(int elementsNumber, ContentsType _value);
+    List(int elementsNumber, const ContentsType& _value);
 
     void rewriteFirstNodePointer(const ListNode<ContentsType>*);
     void rewriteLastNodePointer(const ListNode<ContentsType>*);
@@ -57,8 +57,8 @@ public:
      * Add a node to the front of the list
      * @param _value Value saved in the new list node
      */
-    void push_front(ContentsType _value);
-    void push_back(ContentsType _value);
+    void push_front(const ContentsType& _value);
+    void push_back(const ContentsType& _value);
 
 private:
     ListNode<ContentsType>* firstNodePointer;
