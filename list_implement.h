@@ -14,27 +14,27 @@ ListNode<ContentsType>::ListNode(const ContentsType& _value) :  value(_value)
                                                                 ,previousNodePointer(NULL) {}
 
 template <typename ContentsType>
-ContentsType* ListNode<ContentsType>::getValuePointer() const {
-    return &value;
+ContentsType ListNode<ContentsType>::getValue() const {
+    return value;
 }
 
 template <typename ContentsType>
-ListNode<ContentsType>* ListNode<ContentsType>::getNextNodePointer() const {
+ListNode<ContentsType>* ListNode<ContentsType>::getNextNodePointer() {
     return nextNodePointer;
 }
 
 template <typename ContentsType>
-ListNode<ContentsType>* ListNode<ContentsType>::getPreviousNodePointer() const {
+ListNode<ContentsType>* ListNode<ContentsType>::getPreviousNodePointer() {
     return previousNodePointer;
 }
 
 template <typename ContentsType>
-void ListNode<ContentsType>::rewriteNextNodePointer(const ListNode<ContentsType>* nodePointer) {
+void ListNode<ContentsType>::rewriteNextNodePointer(ListNode<ContentsType>* nodePointer) {
     nextNodePointer = nodePointer;
 }
 
 template <typename ContentsType>
-void ListNode<ContentsType>::rewritePreviousNodePointer(const ListNode<ContentsType>* nodePointer) {
+void ListNode<ContentsType>::rewritePreviousNodePointer(ListNode<ContentsType>* nodePointer) {
     previousNodePointer = nodePointer;
 }
 
@@ -46,13 +46,43 @@ template <typename ContentsType>
 List<ContentsType>::List() : firstNodePointer(NULL), lastNodePointer(NULL) {}
 
 template <typename ContentsType>
-List<ContentsType>::List(const ContentsType& _value) {}
+List<ContentsType>::List(const ContentsType& _value) {
+    firstNodePointer    = new ListNode<ContentsType>(_value);
+    lastNodePointer     = firstNodePointer;
+}
 
 template <typename ContentsType>
-List<ContentsType>::List(int elementsNumber, const ContentsType& _value) {}
+List<ContentsType>::List(int elementsNumber, const ContentsType& _value) {
+    firstNodePointer    = new ListNode<ContentsType>(_value);
+    lastNodePointer     = firstNodePointer;
+
+    for (int element = 1; element <= elementsNumber; ++element) {
+        push_front(_value);
+    }
+}
 
 template <typename ContentsType>
-void List<ContentsType>::push_front(const ContentsType& _value) {
+ListNode<ContentsType>* List<ContentsType>::getFirstNodePointer() {
+    return firstNodePointer;
+}
+
+template <typename ContentsType>
+ListNode<ContentsType>* List<ContentsType>::getLastNodePointer() {
+    return lastNodePointer;
+}
+
+template <typename ContentsType>
+void List<ContentsType>::rewriteFirstNodePointer(ListNode<ContentsType>* newNode) {
+    firstNodePointer = newNode;
+}
+
+template <typename ContentsType>
+void List<ContentsType>::rewriteLastNodePointer(ListNode<ContentsType>* newNode) {
+    lastNodePointer = newNode;
+}
+
+template <typename ContentsType>
+void List<ContentsType>::push_front(ContentsType& _value) {
     if (firstNodePointer == NULL) {
         firstNodePointer    = new ListNode<ContentsType>(_value);
         lastNodePointer     = firstNodePointer;
@@ -69,7 +99,7 @@ void List<ContentsType>::push_front(const ContentsType& _value) {
 }
 
 template <typename ContentsType>
-void List<ContentsType>::push_back(const ContentsType& _value) {
+void List<ContentsType>::push_back(ContentsType& _value) {
     if (lastNodePointer == NULL) {
         lastNodePointer     = new ListNode<ContentsType>(_value);
         firstNodePointer    = lastNodePointer;

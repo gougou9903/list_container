@@ -14,11 +14,11 @@ public:
      */
     ListNode(const ContentsType& _value);
 
-    ContentsType* getValuePointer() const;
-    ListNode<ContentsType>* getNextNodePointer() const;
-    ListNode<ContentsType>* getPreviousNodePointer() const;
-    void rewriteNextNodePointer(const ListNode<ContentsType>* nodePointer);
-    void rewritePreviousNodePointer(const ListNode<ContentsType>* nodePointer);
+    ContentsType getValue() const;
+    ListNode<ContentsType>* getNextNodePointer();
+    ListNode<ContentsType>* getPreviousNodePointer();
+    void rewriteNextNodePointer(ListNode<ContentsType>* nodePointer);
+    void rewritePreviousNodePointer(ListNode<ContentsType>* nodePointer);
 
 private:
     ListNode<ContentsType>* nextNodePointer;
@@ -33,7 +33,7 @@ template <typename ContentsType> class List {
 public:
     /**
      * Constructs an empty list
-    */
+     */
     List();
 
     /**
@@ -49,20 +49,23 @@ public:
      */
     List(int elementsNumber, const ContentsType& _value);
 
-    void rewriteFirstNodePointer(const ListNode<ContentsType>*);
-    void rewriteLastNodePointer(const ListNode<ContentsType>*);
+    ListNode<ContentsType>* getFirstNodePointer();
+    ListNode<ContentsType>* getLastNodePointer();
+
+    void rewriteFirstNodePointer(ListNode<ContentsType>* newNode);
+    void rewriteLastNodePointer(ListNode<ContentsType>* newNode);
 
     /**
      * Add a node to the front of the list
      * @param _value Value saved in the new list node
      */
-    void push_front(const ContentsType& _value);
+    void push_front(ContentsType& _value);
 
     /**
      * Add a node to the back of the list
      * @param _value Value saved in the new list node
      */
-    void push_back(const ContentsType& _value);
+    void push_back(ContentsType& _value);
 
 private:
     ListNode<ContentsType>* firstNodePointer;
