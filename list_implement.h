@@ -1,17 +1,17 @@
 #include <cstdlib>
 #include "list.h"
 
-/********************************************//**
+/************************************************
  * Node implementation
  ***********************************************/
 
 template <typename ContentsType>
-ListNode<ContentsType>::ListNode() : nextNodePointer(this), previousNodePointer(this) {}
+ListNode<ContentsType>::ListNode() : nextNodePointer(NULL), previousNodePointer(NULL) {}
 
 template <typename ContentsType>
 ListNode<ContentsType>::ListNode(const ContentsType& _value) :  value(_value)
-                                                                ,nextNodePointer(this)
-                                                                ,previousNodePointer(this) {}
+                                                                ,nextNodePointer(NULL)
+                                                                ,previousNodePointer(NULL) {}
 
 template <typename ContentsType>
 ContentsType* ListNode<ContentsType>::getValuePointer() const {
@@ -38,7 +38,7 @@ void ListNode<ContentsType>::rewritePreviousNodePointer(const ListNode<ContentsT
     previousNodePointer = nodePointer;
 }
 
-/********************************************//**
+/************************************************
  *  List implementation
  ***********************************************/
 
@@ -61,10 +61,26 @@ void List<ContentsType>::push_front(const ContentsType& _value) {
         ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
 
         newNode->rewriteNextNodePointer(firstNodePointer);
-        newNode->rewritePreviousNodePointer(lastNodePointer);
 
         firstNodePointer->rewritePreviousNodePointer(newNode);
-        lastNodePointer->rewriteNextNodePointer(newNode);
+
         rewriteFirstNodePointer(newNode);
+    }
+}
+
+template <typename ContentsType>
+void List<ContentsType>::push_back(const ContentsType& _value) {
+    if (lastNodePointer == NULL) {
+        lastNodePointer     = new ListNode<ContentsType>(_value);
+        firstNodePointer    = lastNodePointer;
+    }
+    else {
+        ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
+
+        newNode->rewritePreviousNodePointer(lastNodePointer);
+
+        lastNodePointer->rewriteNextNodePointer(newNode);
+
+        rewriteLastNodePointer(newNode);
     }
 }

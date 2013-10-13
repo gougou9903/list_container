@@ -5,12 +5,12 @@ template <typename ContentsType>
 class ListNode {
 public:
     /**
-    * Constructs and empty element of the list, points to itself by default
+    * Constructs and empty element of the list, points to NULL by default
     */
     ListNode();
 
     /**
-     * Constructs and element of the list, points to itself by default
+     * Constructs and element of the list, points to NULL by default
      */
     ListNode(const ContentsType& _value);
 
