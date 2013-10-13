@@ -4,7 +4,6 @@
 #include "list_implement.h"
 
 int main() {
-    // int a = -1;
     List<int> testList(-1);
 
     for (int i = 0; i <= 9; ++i) {

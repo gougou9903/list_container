@@ -38,6 +38,13 @@ void ListNode<ContentsType>::rewritePreviousNodePointer(ListNode<ContentsType>* 
     previousNodePointer = nodePointer;
 }
 
+template <typename ContentsType>
+ListNode<ContentsType>* List<ContentsType>::operator+(int steps) {
+    if steps > 0 {
+        ListNode<ContentsType>* wantedNode = nextNodePointer;
+    }
+}
+
 /************************************************
  *  List implementation
  ***********************************************/

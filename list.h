@@ -20,6 +20,8 @@ public:
     void rewriteNextNodePointer(ListNode<ContentsType>* nodePointer);
     void rewritePreviousNodePointer(ListNode<ContentsType>* nodePointer);
 
+    ListNode<ContentsType>* operator+(int steps);
+
 private:
     ListNode<ContentsType>* nextNodePointer;
     ListNode<ContentsType>* previousNodePointer;
