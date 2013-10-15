@@ -4,15 +4,16 @@
 #include "list_implement.h"
 
 int main() {
-    List<int> testList(-1);
+    List<int> testList(25);
 
-    for (int i = 0; i <= 9; ++i) {
-        testList.push_back(i);
+    for (int i = 1; i <= 9; ++i) {
+        testList.push_back(2*i);
     }
 
-    for (int i = -1; i <= 9; ++i) {
-        int temp = testList.getLastNodePointer()->getValue();
-        std::cout << temp << std::endl;
+    ListIterator<int> iter = testList.begin();
+
+    for (int i = 0; i <= 9; ++i) {
+        std::cout << (iter + i).getNodeValue() << std::endl;
     }
     return 0;
 }

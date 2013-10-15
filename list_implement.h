@@ -38,11 +38,30 @@ void ListNode<ContentsType>::rewritePreviousNodePointer(ListNode<ContentsType>* 
     previousNodePointer = nodePointer;
 }
 
+/************************************************
+ *  Iterator implementation
+ ***********************************************/
+
 template <typename ContentsType>
-ListNode<ContentsType>* List<ContentsType>::operator+(int steps) {
-    if steps > 0 {
-        ListNode<ContentsType>* wantedNode = nextNodePointer;
+ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : myNodePointer(nodePointer) {}
+
+template <typename ContentsType>
+ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
+    // ListNode<ContentsType>* myNodePointer = myNodePointer->getNextNodePointer();
+    ListNode<ContentsType>* temp = myNodePointer;
+    for (; steps > 0; --steps) {
+        temp = temp->getNextNodePointer();
+
+        // if (myNodePointer == NULL) {
+        //     throw 0;
+        // }
     }
+    return ListIterator<ContentsType>(temp);
+}
+
+template <typename ContentsType>
+ContentsType ListIterator<ContentsType>::getNodeValue() const {
+    return myNodePointer->getValue();
 }
 
 /************************************************
@@ -69,6 +88,30 @@ List<ContentsType>::List(int elementsNumber, const ContentsType& _value) {
 }
 
 template <typename ContentsType>
+ListIterator<ContentsType> List<ContentsType>::begin() {
+    ListIterator<ContentsType> iterator = ListIterator<ContentsType>(firstNodePointer);
+    return iterator;
+}
+
+template <typename ContentsType>
+ListIterator<ContentsType> List<ContentsType>::end() {
+    ListIterator<ContentsType> iterator = ListIterator<ContentsType>(lastNodePointer);
+    return iterator;
+}
+
+template <typename ContentsType>
+ContentsType List<ContentsType>::front() {
+    // TODO: try-catch
+    return firstNodePointer->getValue();
+}
+
+template <typename ContentsType>
+ContentsType List<ContentsType>::back() {
+    // TODO: try-catch
+    return lastNodePointer->getValue();
+}
+
+template <typename ContentsType>
 ListNode<ContentsType>* List<ContentsType>::getFirstNodePointer() {
     return firstNodePointer;
 }
@@ -89,7 +132,7 @@ void List<ContentsType>::rewriteLastNodePointer(ListNode<ContentsType>* newNode)
 }
 
 template <typename ContentsType>
-void List<ContentsType>::push_front(ContentsType& _value) {
+void List<ContentsType>::push_front(const ContentsType& _value) {
     if (firstNodePointer == NULL) {
         firstNodePointer    = new ListNode<ContentsType>(_value);
         lastNodePointer     = firstNodePointer;
@@ -106,7 +149,7 @@ void List<ContentsType>::push_front(ContentsType& _value) {
 }
 
 template <typename ContentsType>
-void List<ContentsType>::push_back(ContentsType& _value) {
+void List<ContentsType>::push_back(const ContentsType& _value) {
     if (lastNodePointer == NULL) {
         lastNodePointer     = new ListNode<ContentsType>(_value);
         firstNodePointer    = lastNodePointer;
