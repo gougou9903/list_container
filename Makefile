@@ -1,9 +1,12 @@
 CC=g++
 
-all: print create_build_dir
+all: clean print create_build_dir
 	$(CC) main.cpp -o product/myList.exe
 
 clean:
+	@echo -------------------------------------------------
+	@echo ---           Cleaning /product/ dir          ---
+	@echo -------------------------------------------------
 	@rm product -f -r
 
 rebuild: clean all
