@@ -6,17 +6,20 @@
 int main() {
     List<int> testList = List<int>();
 
-    for (int i = 0; i <= 5; ++i) {
-        testList.push_back(i);
-    }
-
-    ListIterator<int> iter = testList.begin();
-
     try {
-        for (int i = 0; i <= 6; ++i) {
-            std::cout << iter.getNodeValue() << std::endl;
-            iter = ++iter;
+        for (int i = 0; i <= 5; ++i) {
+            testList.push_back(i);
         }
+
+        testList.pop_front();
+
+        ListIterator<int> iter = testList.begin();
+
+        for (int i = 0; i <= 6; ++i) {
+            std::cout << (iter++).getNodeValue() << std::endl;
+        }
+
+        testList.pop_back();
     }
     catch (int errorCode) {
         switch (errorCode) {
@@ -24,13 +27,15 @@ int main() {
                 std::cout << "Attempted to go outside the list" << std::endl;
                 break;
             case 1:
+                std::cout << "Attempted to access non-exsistent node" << std::endl;
                 break;
             case 2:
+                std::cout << "Attempted to get iterator pointing to NULL" << std::endl;
                 break;
-            default:
-                std::cout << "All went well" << std::endl;
         }
     }
+
+    std::cout << "list contains " << testList.size() << " elements" << std::endl;
 
     std::cout << "End of test" << std::endl;
 

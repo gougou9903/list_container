@@ -43,7 +43,11 @@ void ListNode<ContentsType>::rewritePreviousNodePointer(ListNode<ContentsType>* 
  ***********************************************/
 
 template <typename ContentsType>
-ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : myNodePointer(nodePointer) {}
+ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : myNodePointer(nodePointer) {
+    if (nodePointer == NULL) {
+        throw 2;
+    }
+}
 
 template <typename ContentsType>
 ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
@@ -58,8 +62,8 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
         }
     }
 
-    myNodePointer = temp;
-    return *this;
+    // myNodePointer = temp;
+    return ListIterator<ContentsType>(temp);
 }
 
 template <typename ContentsType>
@@ -75,8 +79,8 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator-(int steps) {
         }
     }
 
-    myNodePointer = temp;
-    return *this;
+    // myNodePointer = temp;
+    return ListIterator<ContentsType>(temp);
 }
 
 template <typename ContentsType> // postfix operator
@@ -157,7 +161,9 @@ List<ContentsType>::List(int elementsNumber, const ContentsType& _value) {
 
 template <typename ContentsType>
 List<ContentsType>::~List() {
-    std::cout << "List destruction" << std::endl;
+    if (firstNodePointer == NULL) {
+        return;
+    }
 
     ListNode<ContentsType>* nodeToDelete = firstNodePointer;
     ListNode<ContentsType>* nextNodeToDelete = firstNodePointer->getNextNodePointer();
@@ -247,4 +253,41 @@ void List<ContentsType>::push_back(const ContentsType& _value) {
 
         rewriteLastNodePointer(newNode);
     }
+}
+
+template <typename ContentsType>
+void List<ContentsType>::pop_front() {
+    if (firstNodePointer == NULL) {
+        throw 1;
+    }
+
+    ListNode<ContentsType>* newFirstNodePointer = firstNodePointer->getNextNodePointer();
+    delete firstNodePointer;
+    rewriteFirstNodePointer(newFirstNodePointer);
+    newFirstNodePointer->rewritePreviousNodePointer(NULL);
+}
+
+template <typename ContentsType>
+void List<ContentsType>::pop_back() {
+    if (lastNodePointer == NULL) {
+        throw 1;
+    }
+
+    ListNode<ContentsType>* newLastNodePointer = lastNodePointer->getPreviousNodePointer();
+    delete lastNodePointer;
+    rewriteLastNodePointer(newLastNodePointer);
+    newLastNodePointer->rewriteNextNodePointer(NULL);
+}
+
+template <typename ContentsType>
+long int List<ContentsType>::size() const {
+    ListNode<ContentsType>* nextNodePointer = firstNodePointer;
+    long int counter = 0;
+
+    while (nextNodePointer != NULL) {
+        ++counter;
+        nextNodePointer = nextNodePointer->getNextNodePointer();
+    }
+
+    return counter;
 }

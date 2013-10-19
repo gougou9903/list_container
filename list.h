@@ -105,6 +105,11 @@ public:
      */
     void push_back(const ContentsType& _value);
 
+    void pop_front();
+    void pop_back();
+
+    long int size() const;
+
 private:
     ListNode<ContentsType>* firstNodePointer;
     ListNode<ContentsType>* lastNodePointer;
