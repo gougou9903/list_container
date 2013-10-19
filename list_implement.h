@@ -47,8 +47,8 @@ ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : 
 
 template <typename ContentsType>
 ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
-    // ListNode<ContentsType>* myNodePointer = myNodePointer->getNextNodePointer();
     ListNode<ContentsType>* temp = myNodePointer;
+
     for (; steps > 0; --steps) {
 
         temp = temp->getNextNodePointer();
@@ -57,7 +57,74 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
             throw 0;
         }
     }
-    return temp;
+
+    myNodePointer = temp;
+    return *this;
+}
+
+template <typename ContentsType>
+ListIterator<ContentsType> ListIterator<ContentsType>::operator-(int steps) {
+    ListNode<ContentsType>* temp = myNodePointer;
+
+    for (; steps > 0; --steps) {
+
+        temp = temp->getPreviousNodePointer();
+
+        if (temp == NULL) {
+            throw 0;
+        }
+    }
+
+    myNodePointer = temp;
+    return *this;
+}
+
+template <typename ContentsType> // postfix operator
+ListIterator<ContentsType> ListIterator<ContentsType>::operator++(int i) {
+    ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
+
+    if (temp == NULL) {
+        throw 0;
+    }
+
+    myNodePointer = temp;
+    return *this;
+}
+
+template <typename ContentsType> // postfix operator
+ListIterator<ContentsType> ListIterator<ContentsType>::operator--(int i) {
+    ListNode<ContentsType>* temp = myNodePointer->getPreviousNodePointer();
+
+    if (temp == NULL) {
+        throw 0;
+    }
+
+    myNodePointer = temp;
+    return *this;
+}
+
+template <typename ContentsType> // prefix operator
+ListIterator<ContentsType> ListIterator<ContentsType>::operator++() {
+    ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
+
+        if (temp == NULL) {
+            throw 0;
+        }
+
+    myNodePointer = temp;
+    return *this;
+}
+
+template <typename ContentsType> // prefix operator
+ListIterator<ContentsType> ListIterator<ContentsType>::operator--() {
+    ListNode<ContentsType>* temp = myNodePointer->getPreviousNodePointer();
+
+    if (temp == NULL) {
+        throw 0;
+    }
+
+    myNodePointer = temp;
+    return *this;
 }
 
 template <typename ContentsType>

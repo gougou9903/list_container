@@ -4,17 +4,18 @@
 #include "list_implement.h"
 
 int main() {
-    List<int> testList(0);
+    List<int> testList = List<int>();
 
-    for (int i = 1; i <= 9; ++i) {
+    for (int i = 0; i <= 5; ++i) {
         testList.push_back(i);
     }
 
     ListIterator<int> iter = testList.begin();
 
     try {
-        for (int i = 0; i <= 20; ++i) {
-            std::cout << (iter + i).getNodeValue() << std::endl;
+        for (int i = 0; i <= 6; ++i) {
+            std::cout << iter.getNodeValue() << std::endl;
+            iter = ++iter;
         }
     }
     catch (int errorCode) {
