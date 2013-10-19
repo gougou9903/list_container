@@ -79,6 +79,8 @@ public:
      */
     List(int elementsNumber, const ContentsType& _value);
 
+    ~List();
+
     ListIterator<ContentsType> begin();
     ListIterator<ContentsType> end();
 
