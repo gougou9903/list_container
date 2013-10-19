@@ -161,20 +161,18 @@ List<ContentsType>::List(int elementsNumber, const ContentsType& _value) {
 
 template <typename ContentsType>
 List<ContentsType>::~List() {
-    if (firstNodePointer == NULL) {
-        return;
+    if (firstNodePointer != NULL) {
+        ListNode<ContentsType>* nodeToDelete = firstNodePointer;
+        ListNode<ContentsType>* nextNodeToDelete = firstNodePointer->getNextNodePointer();
+
+        while (nextNodeToDelete != NULL) {
+            delete nodeToDelete;
+            nodeToDelete = nextNodeToDelete;
+            nextNodeToDelete = nextNodeToDelete->getNextNodePointer();
+        }
+
+        delete lastNodePointer;
     }
-
-    ListNode<ContentsType>* nodeToDelete = firstNodePointer;
-    ListNode<ContentsType>* nextNodeToDelete = firstNodePointer->getNextNodePointer();
-
-    while (nextNodeToDelete != NULL) {
-        delete nodeToDelete;
-        nodeToDelete = nextNodeToDelete;
-        nextNodeToDelete = nextNodeToDelete->getNextNodePointer();
-    }
-
-    delete lastNodePointer;
 }
 
 template <typename ContentsType>
