@@ -50,13 +50,14 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
     // ListNode<ContentsType>* myNodePointer = myNodePointer->getNextNodePointer();
     ListNode<ContentsType>* temp = myNodePointer;
     for (; steps > 0; --steps) {
+
         temp = temp->getNextNodePointer();
 
-        // if (myNodePointer == NULL) {
-        //     throw 0;
-        // }
+        if (temp == NULL) {
+            throw 0;
+        }
     }
-    return ListIterator<ContentsType>(temp);
+    return temp;
 }
 
 template <typename ContentsType>

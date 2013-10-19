@@ -43,6 +43,8 @@ public:
     ListIterator(ListNode<ContentsType>* nodePointer);
 
     ListIterator<ContentsType> operator+(int steps);
+    ListIterator<ContentsType> operator-(int steps);
+
     ContentsType getNodeValue() const;
 
 private:
