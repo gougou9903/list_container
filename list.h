@@ -111,7 +111,16 @@ public:
     void pop_front();
     void pop_back();
 
-    ListIterator<ContentsType> erase(ListIterator<ContentsType>);
+    /**
+     * Delete the node of the given iterator
+     * @param iter iterator of the element to delete
+     * @return the iterator for the next node or for the end of the list if the last element was deleted
+     */
+    ListIterator<ContentsType> erase(ListIterator<ContentsType> iter);
+
+    /**
+     * Delete all the elements of the list
+     */
     void clear();
 
     long int size() const;
