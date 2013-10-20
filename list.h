@@ -97,13 +97,13 @@ public:
     void rewriteLastNodePointer(ListNode<ContentsType>* newNode);
 
     /**
-     * Add a node to the front of the list
+     * Adds a node to the front of the list
      * @param _value Value saved in the new list node
      */
     void push_front(const ContentsType& _value);
 
     /**
-     * Add a node to the back of the list
+     * Adds a node to the back of the list
      * @param _value Value saved in the new list node
      */
     void push_back(const ContentsType& _value);
@@ -112,14 +112,23 @@ public:
     void pop_back();
 
     /**
-     * Delete the node of the given iterator
+     * Merges calling list and the list given as an arguement
+     * @param addedList elements of this list will be placed to the end of
+     * the calling list, will be left empty afterwards (not deleted)
+     */
+    void merge(List<ContentsType>& addedList);
+
+    void splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList);
+
+    /**
+     * Deletes the node of the given iterator
      * @param iter iterator of the element to delete
      * @return the iterator for the next node or for the end of the list if the last element was deleted
      */
     ListIterator<ContentsType> erase(ListIterator<ContentsType> iter);
 
     /**
-     * Delete all the elements of the list
+     * Deletes all the elements of the list
      */
     void clear();
 

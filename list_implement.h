@@ -285,6 +285,34 @@ void List<ContentsType>::pop_back() {
 }
 
 template <typename ContentsType>
+void List<ContentsType>::merge(List<ContentsType>& addedList) {
+    ListNode<ContentsType>* addedListFirstNode = addedList.getFirstNodePointer();
+    ListNode<ContentsType>* addedListLastNode = addedList.getLastNodePointer();
+
+    if (addedListFirstNode == NULL) {
+        return;
+    }
+
+    ListNode<ContentsType>* baseListLastNode = this->getLastNodePointer();
+    if (baseListLastNode == NULL) {
+        this->rewriteFirstNodePointer(addedListFirstNode);
+    }
+    else {
+        baseListLastNode->rewriteNextNodePointer(addedListFirstNode);
+    }
+    this->rewriteLastNodePointer(addedListLastNode);
+
+    addedListFirstNode->rewritePreviousNodePointer(baseListLastNode);
+    addedList.rewriteFirstNodePointer(NULL);
+    addedList.rewriteLastNodePointer(NULL);
+}
+
+template <typename ContentsType>
+void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList) {
+
+}
+
+template <typename ContentsType>
 ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> iter) {
     ListNode<ContentsType>* iteratorNodePointer    = iter.getNodePointer();
 

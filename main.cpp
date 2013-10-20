@@ -5,22 +5,29 @@
 
 int main() {
     List<int> testList = List<int>();
+    List<int> scndList = List<int>();
 
     try {
         for (int i = 0; i <= 5; ++i) {
             testList.push_back(i);
         }
 
-        // testList.pop_front();
-
-        ListIterator<int> iter = testList.end();
-        // iter = testList.erase(iter - 5);
-
-        for (int i = 0; i <= 5; ++i) {
-            std::cout << (iter - i).getNodeValue() << std::endl;
+        for (int i = 6; i <= 15; ++i) {
+            scndList.push_back(i);
         }
 
-        testList.pop_back();
+        testList.merge(scndList);
+        // testList.pop_front();
+
+        ListIterator<int> iter = testList.begin();
+        // iter = testList.erase(iter - 5);
+
+        long int listSize = testList.size();
+        for (int i = 0; i <= listSize - 1; ++i) {
+            std::cout << (iter + i).getNodeValue() << std::endl;
+        }
+
+        // testList.pop_back();
         // testList.clear();
     }
     catch (int errorCode) {
