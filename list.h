@@ -49,6 +49,9 @@ public:
     ListIterator<ContentsType> operator--(int);
     ListIterator<ContentsType> operator--();
 
+    ListNode<ContentsType>* getNodePointer();
+    void rewriteNodePointer(ListNode<ContentsType>*);
+
     ContentsType getNodeValue() const;
 
 private:
@@ -107,6 +110,9 @@ public:
 
     void pop_front();
     void pop_back();
+
+    ListIterator<ContentsType> erase(ListIterator<ContentsType>);
+    void clear();
 
     long int size() const;
 

@@ -62,7 +62,6 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
         }
     }
 
-    // myNodePointer = temp;
     return ListIterator<ContentsType>(temp);
 }
 
@@ -79,7 +78,6 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator-(int steps) {
         }
     }
 
-    // myNodePointer = temp;
     return ListIterator<ContentsType>(temp);
 }
 
@@ -132,6 +130,20 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator--() {
 }
 
 template <typename ContentsType>
+ListNode<ContentsType>* ListIterator<ContentsType>::getNodePointer() {
+    return myNodePointer;
+}
+
+template <typename ContentsType>
+void ListIterator<ContentsType>::rewriteNodePointer(ListNode<ContentsType>* pointer) {
+    if (pointer == NULL) {
+        throw 2;
+    }
+
+    myNodePointer = pointer;
+}
+
+template <typename ContentsType>
 ContentsType ListIterator<ContentsType>::getNodeValue() const {
     return myNodePointer->getValue();
 }
@@ -161,18 +173,7 @@ List<ContentsType>::List(int elementsNumber, const ContentsType& _value) {
 
 template <typename ContentsType>
 List<ContentsType>::~List() {
-    if (firstNodePointer != NULL) {
-        ListNode<ContentsType>* nodeToDelete = firstNodePointer;
-        ListNode<ContentsType>* nextNodeToDelete = firstNodePointer->getNextNodePointer();
-
-        while (nextNodeToDelete != NULL) {
-            delete nodeToDelete;
-            nodeToDelete = nextNodeToDelete;
-            nextNodeToDelete = nextNodeToDelete->getNextNodePointer();
-        }
-
-        delete lastNodePointer;
-    }
+    clear();
 }
 
 template <typename ContentsType>
@@ -189,13 +190,19 @@ ListIterator<ContentsType> List<ContentsType>::end() {
 
 template <typename ContentsType>
 ContentsType List<ContentsType>::front() {
-    // TODO: try-catch
+    if (firstNodePointer == NULL) {
+        throw 1;
+    }
+
     return firstNodePointer->getValue();
 }
 
 template <typename ContentsType>
 ContentsType List<ContentsType>::back() {
-    // TODO: try-catch
+    if (lastNodePointer == NULL) {
+        throw 1;
+    }
+
     return lastNodePointer->getValue();
 }
 
@@ -275,6 +282,57 @@ void List<ContentsType>::pop_back() {
     delete lastNodePointer;
     rewriteLastNodePointer(newLastNodePointer);
     newLastNodePointer->rewriteNextNodePointer(NULL);
+}
+
+template <typename ContentsType>
+ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> iter) {
+    ListNode<ContentsType>* iteratorNodePointer    = iter.getNodePointer();
+
+    ListNode<ContentsType>* nextNodePointer = iteratorNodePointer->getNextNodePointer();
+    ListNode<ContentsType>* previousNodePointer = iteratorNodePointer->getPreviousNodePointer();
+
+    delete iteratorNodePointer;
+
+    if (previousNodePointer != NULL) {
+        previousNodePointer->rewriteNextNodePointer(nextNodePointer);
+    }
+    else {
+        rewriteFirstNodePointer(nextNodePointer);
+    }
+
+    if (nextNodePointer != NULL) {
+        nextNodePointer->rewritePreviousNodePointer(previousNodePointer);
+    }
+    else {
+        rewriteLastNodePointer(previousNodePointer);
+
+        // returns iterator for the end of the list
+        // if the last element was deleted
+        iter.rewriteNodePointer(previousNodePointer);
+        return iter;
+    }
+
+    iter.rewriteNodePointer(nextNodePointer);
+    return iter;
+}
+
+template <typename ContentsType>
+void List<ContentsType>::clear() {
+    if (firstNodePointer != NULL) {
+        ListNode<ContentsType>* nodeToDelete = firstNodePointer;
+        ListNode<ContentsType>* nextNodeToDelete = firstNodePointer->getNextNodePointer();
+
+        while (nextNodeToDelete != NULL) {
+            delete nodeToDelete;
+            nodeToDelete = nextNodeToDelete;
+            nextNodeToDelete = nextNodeToDelete->getNextNodePointer();
+        }
+
+        delete lastNodePointer;
+
+        rewriteFirstNodePointer(NULL);
+        rewriteLastNodePointer(NULL);
+    }
 }
 
 template <typename ContentsType>

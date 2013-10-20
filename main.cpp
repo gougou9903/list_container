@@ -11,15 +11,17 @@ int main() {
             testList.push_back(i);
         }
 
-        testList.pop_front();
+        // testList.pop_front();
 
-        ListIterator<int> iter = testList.begin();
+        ListIterator<int> iter = testList.end();
+        // iter = testList.erase(iter - 5);
 
-        for (int i = 0; i <= 6; ++i) {
-            std::cout << (iter++).getNodeValue() << std::endl;
+        for (int i = 0; i <= 5; ++i) {
+            std::cout << (iter - i).getNodeValue() << std::endl;
         }
 
         testList.pop_back();
+        // testList.clear();
     }
     catch (int errorCode) {
         switch (errorCode) {
@@ -35,7 +37,7 @@ int main() {
         }
     }
 
-    std::cout << "list contains " << testList.size() << " elements" << std::endl;
+    std::cout << "List contains " << testList.size() << " elements" << std::endl;
 
     std::cout << "End of test" << std::endl;
 
