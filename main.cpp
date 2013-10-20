@@ -16,10 +16,12 @@ int main() {
             scndList.push_back(i);
         }
 
-        testList.merge(scndList);
+        // testList.merge(scndList);
         // testList.pop_front();
 
         ListIterator<int> iter = testList.begin();
+        testList.splice(iter + 2, scndList);
+
         // iter = testList.erase(iter - 5);
 
         long int listSize = testList.size();

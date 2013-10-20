@@ -309,7 +309,29 @@ void List<ContentsType>::merge(List<ContentsType>& addedList) {
 
 template <typename ContentsType>
 void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList) {
+    ListNode<ContentsType>* addedListFirstNode = addedList.getFirstNodePointer();
+    ListNode<ContentsType>* addedListLastNode = addedList.getLastNodePointer();
 
+    if (addedListFirstNode == NULL) {
+        return;
+    }
+
+    ListNode<ContentsType>* iterNodePointer = iter.getNodePointer();
+    ListNode<ContentsType>* afterIterNodePointer = iterNodePointer->getNextNodePointer();
+
+    addedListFirstNode->rewritePreviousNodePointer(iterNodePointer);
+    addedListLastNode->rewriteNextNodePointer(afterIterNodePointer);
+
+    iterNodePointer->rewriteNextNodePointer(addedListFirstNode);
+    if (afterIterNodePointer == NULL) {
+        rewriteLastNodePointer(addedListLastNode);
+    }
+    else {
+        afterIterNodePointer->rewritePreviousNodePointer(addedListLastNode);
+    }
+
+    addedList.rewriteFirstNodePointer(NULL);
+    addedList.rewriteLastNodePointer(NULL);
 }
 
 template <typename ContentsType>

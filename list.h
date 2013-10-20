@@ -118,6 +118,12 @@ public:
      */
     void merge(List<ContentsType>& addedList);
 
+    /**
+     * Adds elements of the list given as an arguement to the calling list at the iterator position
+     * @param iter adds elements after this iterator position
+     * @param addedList elements of this list will added tothe calling list,
+     * will be left empty afterwards (not deleted)
+     */
     void splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList);
 
     /**
