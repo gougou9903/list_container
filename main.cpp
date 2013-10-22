@@ -7,30 +7,36 @@ int main() {
     List<int> testList = List<int>();
     List<int> scndList = List<int>();
 
+    static long int counter = 0;
     try {
-        for (int i = 0; i <= 5; ++i) {
-            testList.push_back(i);
+        while (1) {
+            for (int i = 0; i <= 1000000; ++i) {
+                testList.push_back(i);
+            }
+
+            for (int i = 6; i <= 1500000; ++i) {
+                scndList.push_front(i);
+            }
+
+            ListIterator<int> iter = testList.begin();
+            testList.splice(iter + 500, scndList);
+
+            scndList.merge(testList);
+            testList.merge(scndList);
+            // // testList.pop_front();
+
+            // // iter = testList.erase(iter - 5);
+
+            // long int listSize = testList.size();
+            // for (int i = 0; i <= listSize - 1; ++i) {
+            //     std::cout << (iter + i).getNodeValue() << std::endl;
+            // }
+
+            // testList.pop_back();
+            testList.clear();
+            ++counter;
+            std::cout << "Cycle # " << counter << " done" << std::endl;
         }
-
-        for (int i = 6; i <= 15; ++i) {
-            scndList.push_back(i);
-        }
-
-        // testList.merge(scndList);
-        // testList.pop_front();
-
-        ListIterator<int> iter = testList.begin();
-        testList.splice(iter + 2, scndList);
-
-        // iter = testList.erase(iter - 5);
-
-        long int listSize = testList.size();
-        for (int i = 0; i <= listSize - 1; ++i) {
-            std::cout << (iter + i).getNodeValue() << std::endl;
-        }
-
-        // testList.pop_back();
-        // testList.clear();
     }
     catch (int errorCode) {
         switch (errorCode) {
