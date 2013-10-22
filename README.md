@@ -14,6 +14,7 @@ Following STL methods are supported:
 - back
 - concat (merge without sorting)
 - splice
+- erase
 - clear
 - size
 
