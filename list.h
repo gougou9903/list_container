@@ -112,11 +112,11 @@ public:
     void pop_back();
 
     /**
-     * Merges calling list and the list given as an arguement
+     * Concatenates calling list and the list given as an arguement
      * @param addedList elements of this list will be placed to the end of
      * the calling list, will be left empty afterwards (not deleted)
      */
-    void merge(List<ContentsType>& addedList);
+    void concat(List<ContentsType>& addedList);
 
     /**
      * Adds elements of the list given as an arguement to the calling list at the iterator position

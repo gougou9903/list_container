@@ -21,8 +21,8 @@ int main() {
             ListIterator<int> iter = testList.begin();
             testList.splice(iter + 500, scndList);
 
-            scndList.merge(testList);
-            testList.merge(scndList);
+            scndList.concat(testList);
+            testList.concat(scndList);
             // // testList.pop_front();
 
             // // iter = testList.erase(iter - 5);

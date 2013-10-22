@@ -285,7 +285,7 @@ void List<ContentsType>::pop_back() {
 }
 
 template <typename ContentsType>
-void List<ContentsType>::merge(List<ContentsType>& addedList) {
+void List<ContentsType>::concat(List<ContentsType>& addedList) {
     ListNode<ContentsType>* addedListFirstNode = addedList.getFirstNodePointer();
     ListNode<ContentsType>* addedListLastNode = addedList.getLastNodePointer();
 
