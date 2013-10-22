@@ -130,6 +130,11 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator--() {
 }
 
 template <typename ContentsType>
+ContentsType ListIterator<ContentsType>::operator*() {
+    return myNodePointer->getValue();
+}
+
+template <typename ContentsType>
 ListNode<ContentsType>* ListIterator<ContentsType>::getNodePointer() {
     return myNodePointer;
 }
@@ -143,10 +148,6 @@ void ListIterator<ContentsType>::rewriteNodePointer(ListNode<ContentsType>* poin
     myNodePointer = pointer;
 }
 
-template <typename ContentsType>
-ContentsType ListIterator<ContentsType>::getNodeValue() const {
-    return myNodePointer->getValue();
-}
 
 /************************************************
  *  List implementation
@@ -335,10 +336,31 @@ void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsTy
 }
 
 template <typename ContentsType>
-ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> iter) {
-    ListNode<ContentsType>* iteratorNodePointer    = iter.getNodePointer();
+ListIterator<ContentsType> List<ContentsType>::insert(ListIterator<ContentsType> iter,
+                                                      const ContentsType& _value) {
+    ListNode<ContentsType>* iteratorNodePointer = iter.getNodePointer();
+    ListNode<ContentsType>* previousNodePointer = iteratorNodePointer->getPreviousNodePointer();
 
-    ListNode<ContentsType>* nextNodePointer = iteratorNodePointer->getNextNodePointer();
+    ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
+    newNode->rewriteNextNodePointer(iteratorNodePointer);
+    newNode->rewritePreviousNodePointer(previousNodePointer);
+
+    iteratorNodePointer->rewritePreviousNodePointer(newNode);
+
+    if (previousNodePointer == NULL) {
+        rewriteFirstNodePointer(newNode);
+    }
+    else {
+        previousNodePointer->rewriteNextNodePointer(newNode);
+    }
+
+    return ListIterator<ContentsType>(newNode);
+}
+
+template <typename ContentsType>
+ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> iter) {
+    ListNode<ContentsType>* iteratorNodePointer = iter.getNodePointer();
+    ListNode<ContentsType>* nextNodePointer     = iteratorNodePointer->getNextNodePointer();
     ListNode<ContentsType>* previousNodePointer = iteratorNodePointer->getPreviousNodePointer();
 
     delete iteratorNodePointer;
@@ -358,12 +380,11 @@ ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> 
 
         // returns iterator for the end of the list
         // if the last element was deleted
-        iter.rewriteNodePointer(previousNodePointer);
-        return iter;
+        return ListIterator<ContentsType>(previousNodePointer);
     }
 
-    iter.rewriteNodePointer(nextNodePointer);
-    return iter;
+    // iter.rewriteNodePointer(nextNodePointer);
+    return ListIterator<ContentsType>(nextNodePointer);
 }
 
 template <typename ContentsType>

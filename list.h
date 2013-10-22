@@ -21,8 +21,6 @@ public:
     void rewriteNextNodePointer(ListNode<ContentsType>* nodePointer);
     void rewritePreviousNodePointer(ListNode<ContentsType>* nodePointer);
 
-    // ListNode<ContentsType>* operator+(int steps);
-
 private:
     ListNode<ContentsType>* nextNodePointer;
     ListNode<ContentsType>* previousNodePointer;
@@ -48,11 +46,11 @@ public:
     ListIterator<ContentsType> operator-(int steps);
     ListIterator<ContentsType> operator--(int);
     ListIterator<ContentsType> operator--();
+    ContentsType               operator*();
+
 
     ListNode<ContentsType>* getNodePointer();
     void rewriteNodePointer(ListNode<ContentsType>*);
-
-    ContentsType getNodeValue() const;
 
 private:
     ListNode<ContentsType>* myNodePointer;
@@ -90,11 +88,6 @@ public:
     ContentsType front();
     ContentsType back();
 
-    ListNode<ContentsType>* getFirstNodePointer();
-    ListNode<ContentsType>* getLastNodePointer();
-
-    void rewriteFirstNodePointer(ListNode<ContentsType>* newNode);
-    void rewriteLastNodePointer(ListNode<ContentsType>* newNode);
 
     /**
      * Adds a node to the front of the list
@@ -127,7 +120,16 @@ public:
     void splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList);
 
     /**
-     * Deletes the node of the given iterator
+     * Inserts the node before the node corresponding to the given iterator
+     * @param iter insert the new node before the node corrsponding to this iterator
+     * @param _value new node will store this value
+     * @return the iterator for the new node
+     */
+    ListIterator<ContentsType> insert(ListIterator<ContentsType> iter,
+                                      const ContentsType& _value);
+
+    /**
+     * Deletes the node corresponding to the given iterator
      * @param iter iterator of the element to delete
      * @return the iterator for the next node or for the end of the list if the last element was deleted
      */
@@ -141,6 +143,12 @@ public:
     long int size() const;
 
 private:
+    ListNode<ContentsType>* getFirstNodePointer();
+    ListNode<ContentsType>* getLastNodePointer();
+
+    void rewriteFirstNodePointer(ListNode<ContentsType>* newNode);
+    void rewriteLastNodePointer(ListNode<ContentsType>* newNode);
+
     ListNode<ContentsType>* firstNodePointer;
     ListNode<ContentsType>* lastNodePointer;
 };

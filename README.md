@@ -19,6 +19,7 @@ Following STL-like methods are supported:
 - back
 - concat (merge without sorting)
 - splice
+- insert
 - erase
 - clear
 - size
@@ -29,7 +30,9 @@ List (doubly linked list) consists of nodes. List object itself stores only poin
 
 Node objects have pointers to next, previous nodes and stores user value.
 
-On the user side interaction with the list elements is done with the help of Iterator objects. Following operators are overloded for them: +, ++ (postfix and prefix form), -, -- (postfix and prefix form) (incrementing iterator returns iterator to the next node and so on).
+On the user side interaction with the list elements is done with the help of bilinear Iterator objects. Following operators are overloded for them:
+- to get the corresponding node value: "*"
+- to travel between the nodes: "+", "-", "++", "--" (both postfix and prefix form for the last two) (incrementing iterator returns iterator to the next node and so on).
 
 
-You can use doxygen to get more detailed documentation.
+Use doxygen to get more detailed documentation.

@@ -1,4 +1,4 @@
-// Small project aimed for learning more about C++ and STL
+// Small project aimed for learning more about templates and STL
 
 #include <iostream>
 #include "list_implement.h"
@@ -19,20 +19,21 @@ int main() {
             }
 
             ListIterator<int> iter = testList.begin();
+
             testList.splice(iter + 500, scndList);
 
             scndList.concat(testList);
             testList.concat(scndList);
             // // testList.pop_front();
 
-            // // iter = testList.erase(iter - 5);
+            // iter = testList.erase(iter + 5);
 
             // long int listSize = testList.size();
             // for (int i = 0; i <= listSize - 1; ++i) {
-            //     std::cout << (iter + i).getNodeValue() << std::endl;
+            // std::cout << *(iter + i) << std::endl;
             // }
 
-            // testList.pop_back();
+            testList.pop_back();
             testList.clear();
             ++counter;
             std::cout << "Cycle # " << counter << " done" << std::endl;
