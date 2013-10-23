@@ -119,6 +119,8 @@ public:
      */
     void splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList);
 
+    bool empty() const;
+
     /**
      * Inserts the node before the node corresponding to the given iterator
      * @param iter insert the new node before the node corrsponding to this iterator

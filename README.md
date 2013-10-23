@@ -1,7 +1,7 @@
 list_container
 ==============
 
-Template class, supports any object type.
+This is a learning project, it doesn't match real std::list in neither functionality nor speed. Template class, supports any object type.
 
 Following STL-like constructors supported:
 - List() - creates an empty list with no nodes
@@ -19,6 +19,7 @@ Following STL-like methods are supported:
 - back
 - concat (merge without sorting)
 - splice
+- empty
 - insert
 - erase
 - clear

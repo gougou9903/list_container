@@ -336,6 +336,11 @@ void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsTy
 }
 
 template <typename ContentsType>
+bool List<ContentsType>::empty() const {
+    return (firstNodePointer == NULL) && (lastNodePointer == NULL);
+}
+
+template <typename ContentsType>
 ListIterator<ContentsType> List<ContentsType>::insert(ListIterator<ContentsType> iter,
                                                       const ContentsType& _value) {
     ListNode<ContentsType>* iteratorNodePointer = iter.getNodePointer();
