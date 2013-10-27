@@ -1,7 +1,7 @@
 list_container
 ==============
 
-This is a learning project, it doesn't match real std::list in neither functionality nor speed. Template class, supports any object type.
+This is a learning project, it doesn't match the real std::list in neither functionality nor speed. Template class, supports any object type.
 
 Use [doxygen] [1] to get more detailed documentation.
 

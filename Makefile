@@ -7,6 +7,7 @@ clean:
 	@echo -------------------------------------------------
 	@echo ---           Cleaning /product/ dir          ---
 	@echo -------------------------------------------------
+	@echo
 	@rm product -f -r
 
 rebuild: clean all
