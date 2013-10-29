@@ -1,3 +1,15 @@
+class Exception {
+public:
+    Exception(std::string _description, std::string _fileName, int _line);
+
+    std::string getDescription() const;
+private:
+    std::string description;
+    std::string fileName;
+    int line;
+
+};
+
 /**
  * Node class for doubly linked list
  */

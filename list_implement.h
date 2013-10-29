@@ -1,6 +1,18 @@
 #include <cstdlib>
+#include <string>
+#include <sstream>
 #include "list.h"
 
+Exception::Exception(std::string _description,
+                     std::string _fileName, int _line) : description(_description),
+                                                         fileName(_fileName),
+                                                         line(_line) {}
+
+std::string Exception::getDescription() const {
+    std::stringstream errorDesc;
+    errorDesc << description << " at line " << line << " of file " << fileName;
+    return errorDesc.str();
+}
 /************************************************
  * Node implementation
  ***********************************************/
@@ -45,7 +57,7 @@ void ListNode<ContentsType>::rewritePreviousNodePointer(ListNode<ContentsType>* 
 template <typename ContentsType>
 ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : myNodePointer(nodePointer) {
     if (nodePointer == NULL) {
-        throw 2;
+        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
     }
 }
 
@@ -58,7 +70,7 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
         temp = temp->getNextNodePointer();
 
         if (temp == NULL) {
-            throw 0;
+            throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
         }
     }
 
@@ -74,7 +86,7 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator-(int steps) {
         temp = temp->getPreviousNodePointer();
 
         if (temp == NULL) {
-            throw 0;
+            throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
         }
     }
 
@@ -86,7 +98,7 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator++(int i) {
     ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
 
     if (temp == NULL) {
-        throw 0;
+        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
     }
 
     myNodePointer = temp;
@@ -98,7 +110,7 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator--(int i) {
     ListNode<ContentsType>* temp = myNodePointer->getPreviousNodePointer();
 
     if (temp == NULL) {
-        throw 0;
+        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
     }
 
     myNodePointer = temp;
@@ -110,7 +122,7 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator++() {
     ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
 
         if (temp == NULL) {
-            throw 0;
+            throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
         }
 
     myNodePointer = temp;
@@ -122,7 +134,7 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator--() {
     ListNode<ContentsType>* temp = myNodePointer->getPreviousNodePointer();
 
     if (temp == NULL) {
-        throw 0;
+        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
     }
 
     myNodePointer = temp;
@@ -142,7 +154,7 @@ ListNode<ContentsType>* ListIterator<ContentsType>::getNodePointer() {
 template <typename ContentsType>
 void ListIterator<ContentsType>::rewriteNodePointer(ListNode<ContentsType>* pointer) {
     if (pointer == NULL) {
-        throw 2;
+        throw Exception("Attempted to get iterator pointing to NULL", __FILE__, __LINE__);
     }
 
     myNodePointer = pointer;
@@ -192,7 +204,7 @@ ListIterator<ContentsType> List<ContentsType>::end() {
 template <typename ContentsType>
 ContentsType List<ContentsType>::front() {
     if (firstNodePointer == NULL) {
-        throw 1;
+        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
     return firstNodePointer->getValue();
@@ -201,7 +213,7 @@ ContentsType List<ContentsType>::front() {
 template <typename ContentsType>
 ContentsType List<ContentsType>::back() {
     if (lastNodePointer == NULL) {
-        throw 1;
+        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
     return lastNodePointer->getValue();
@@ -264,7 +276,7 @@ void List<ContentsType>::push_back(const ContentsType& _value) {
 template <typename ContentsType>
 void List<ContentsType>::pop_front() {
     if (firstNodePointer == NULL) {
-        throw 1;
+        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
     ListNode<ContentsType>* newFirstNodePointer = firstNodePointer->getNextNodePointer();
@@ -276,7 +288,7 @@ void List<ContentsType>::pop_front() {
 template <typename ContentsType>
 void List<ContentsType>::pop_back() {
     if (lastNodePointer == NULL) {
-        throw 1;
+        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
     ListNode<ContentsType>* newLastNodePointer = lastNodePointer->getPreviousNodePointer();
