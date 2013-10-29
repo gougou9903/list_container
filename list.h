@@ -1,13 +1,25 @@
+/**
+ * Common exception class
+ */
 class Exception {
 public:
+    /**
+    * Constructs an exception object
+    * @param _description General info about error
+    * @param _filename Name of the file that generated error
+    * @param _line Number of the line that generated error
+    */
     Exception(std::string _description, std::string _fileName, int _line);
 
+    /**
+    * @return String with error info, including line number and filename
+    */
     std::string getDescription() const;
+
 private:
     std::string description;
     std::string fileName;
     int line;
-
 };
 
 /**
@@ -48,7 +60,7 @@ class ListIterator {
 public:
     /**
      * Constructs an iterator of the list
-     * @param nodePointer Iterator points to the node associated pointer
+     * @param nodePointer Iterator points to the associated node
      */
     ListIterator(ListNode<ContentsType>* nodePointer);
 
@@ -120,15 +132,15 @@ public:
 
     /**
      * Concatenates calling list and the list given as an arguement
-     * @param addedList elements of this list will be placed to the end of
+     * @param addedList Elements of this list will be placed to the end of
      * the calling list, will be left empty afterwards (not deleted)
      */
     void concat(List<ContentsType>& addedList);
 
     /**
      * Adds elements of the list given as an arguement to the calling list at the iterator position
-     * @param iter adds elements after this iterator position
-     * @param addedList elements of this list will added tothe calling list,
+     * @param Iter adds elements after this iterator position
+     * @param AddedList elements of this list will added tothe calling list,
      * will be left empty afterwards (not deleted)
      */
     void splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList);
@@ -137,17 +149,17 @@ public:
 
     /**
      * Inserts the node before the node corresponding to the given iterator
-     * @param iter insert the new node before the node corrsponding to this iterator
-     * @param _value new node will store this value
-     * @return the iterator for the new node
+     * @param Iter insert the new node before the node corrsponding to this iterator
+     * @param _value New node will store this value
+     * @return The iterator for the new node
      */
     ListIterator<ContentsType> insert(ListIterator<ContentsType> iter,
                                       const ContentsType& _value);
 
     /**
      * Deletes the node corresponding to the given iterator
-     * @param iter iterator of the element to delete
-     * @return the iterator for the next node or for the end of the list if the last element was deleted
+     * @param iter Iterator of the element to delete
+     * @return The iterator for the next node or for the end of the list if the last element was deleted
      */
     ListIterator<ContentsType> erase(ListIterator<ContentsType> iter);
 
@@ -168,3 +180,5 @@ private:
     ListNode<ContentsType>* firstNodePointer;
     ListNode<ContentsType>* lastNodePointer;
 };
+
+#include "list_implement.h"

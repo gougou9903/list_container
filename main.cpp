@@ -1,7 +1,7 @@
 // Small project aimed for learning more about templates and STL
 
 #include <iostream>
-#include "list_implement.h"
+#include "list.h"
 
 int main() {
     List<int> testList = List<int>();

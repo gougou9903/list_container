@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <string>
 #include <sstream>
-#include "list.h"
 
 Exception::Exception(std::string _description,
                      std::string _fileName, int _line) : description(_description),
@@ -10,9 +9,10 @@ Exception::Exception(std::string _description,
 
 std::string Exception::getDescription() const {
     std::stringstream errorDesc;
-    errorDesc << description << " at line " << line << " of file " << fileName;
+    errorDesc << description << " at line " << line << " of the file " << fileName;
     return errorDesc.str();
 }
+
 /************************************************
  * Node implementation
  ***********************************************/
