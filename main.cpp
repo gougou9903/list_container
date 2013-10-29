@@ -18,7 +18,7 @@ int main() {
                 scndList.push_front(i);
             }
 
-            ListIterator<int> iter = testList.begin();
+            List<int>::Iterator iter = testList.begin();
 
             testList.splice(iter + 500, scndList);
 

@@ -82,6 +82,8 @@ public:
 
     ~List();
 
+    typedef ListIterator<ContentsType> Iterator;
+
     ListIterator<ContentsType> begin();
     ListIterator<ContentsType> end();
 
