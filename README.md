@@ -3,7 +3,7 @@ list_container
 
 This is a learning project, it doesn't match the real std::list in neither functionality nor speed. Template class, supports any object type.
 
-"list.h" is the interface file. Use [doxygen] [1] to get more detailed documentation.
+"list.h" is the interface file, include it to your project if you wish to test it. "main.cpp" is just a test module. Use [doxygen] [1] to get more detailed documentation.
 
 Following STL-like constructors supported:
 ------------------------------------------
