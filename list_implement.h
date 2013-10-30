@@ -7,7 +7,7 @@ Exception::Exception(std::string _description,
                                                          fileName(_fileName),
                                                          line(_line) {}
 
-std::string Exception::getDescription() const {
+const std::string Exception::getDescription() const {
     std::stringstream errorDesc;
     errorDesc << description << " at line " << line << " of the file " << fileName;
     return errorDesc.str();

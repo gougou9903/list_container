@@ -38,7 +38,7 @@ int main() {
             std::cout << "Cycle # " << counter << " done" << std::endl;
         }
     }
-    catch (const Exception& error) {
+    catch (const Exception error) {
         std::cout << error.getDescription() << std::endl;
     }
 

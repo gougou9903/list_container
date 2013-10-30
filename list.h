@@ -14,7 +14,7 @@ public:
     /**
     * @return String with error info, including line number and filename
     */
-    std::string getDescription() const;
+    const std::string getDescription() const;
 
 private:
     std::string description;
