@@ -5,25 +5,25 @@ template <typename ContentsType>
 class ListNode {
 public:
     /**
-    * Constructs and empty element of the list, points to NULL by default
+    * Constructs an empty element of the list, points to NULL by default
     */
     ListNode();
 
     /**
-     * Constructs and element of the list, points to NULL by default
+     * Constructs an element of the list, points to NULL by default
      */
     ListNode(const ContentsType& _value);
 
     ContentsType getValue() const;
 
-    ListNode<ContentsType>* getNextNodePointer();
-    ListNode<ContentsType>* getPreviousNodePointer();
-    void rewriteNextNodePointer(ListNode<ContentsType>* nodePointer);
-    void rewritePreviousNodePointer(ListNode<ContentsType>* nodePointer);
+    ListNode* getNextNodePointer();
+    ListNode* getPreviousNodePointer();
+    void rewriteNextNodePointer(ListNode* nodePointer);
+    void rewritePreviousNodePointer(ListNode* nodePointer);
 
 private:
-    ListNode<ContentsType>* nextNodePointer;
-    ListNode<ContentsType>* previousNodePointer;
+    ListNode* nextNodePointer;
+    ListNode* previousNodePointer;
     ContentsType value;
 };
 
@@ -40,13 +40,13 @@ public:
      */
     ListIterator(ListNode<ContentsType>* nodePointer);
 
-    ListIterator<ContentsType> operator+(int steps);
-    ListIterator<ContentsType> operator++(int);
-    ListIterator<ContentsType> operator++();
-    ListIterator<ContentsType> operator-(int steps);
-    ListIterator<ContentsType> operator--(int);
-    ListIterator<ContentsType> operator--();
-    ContentsType               operator*();
+    ListIterator operator+(int steps);
+    ListIterator operator++(int);
+    ListIterator operator++();
+    ListIterator operator-(int steps);
+    ListIterator operator--(int);
+    ListIterator operator--();
+    ContentsType operator*();
 
 
     ListNode<ContentsType>* getNodePointer();
@@ -111,7 +111,7 @@ public:
      * @param addedList Elements of this list will be placed to the end of
      * the calling list, will be left empty afterwards (not deleted)
      */
-    void concat(List<ContentsType>& addedList);
+    void concat(List& addedList);
 
     /**
      * Adds elements of the list given as an arguement to the calling list at the iterator position
@@ -119,7 +119,7 @@ public:
      * @param AddedList elements of this list will added tothe calling list,
      * will be left empty afterwards (not deleted)
      */
-    void splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList);
+    void splice(ListIterator<ContentsType> iter, List& addedList);
 
     bool empty() const;
 
