@@ -40,10 +40,8 @@ public:
      */
     ListIterator(ListNode<ContentsType>* nodePointer);
 
-    ListIterator operator+(int steps);
     ListIterator operator++(int);
     ListIterator operator++();
-    ListIterator operator-(int steps);
     ListIterator operator--(int);
     ListIterator operator--();
     ContentsType operator*();

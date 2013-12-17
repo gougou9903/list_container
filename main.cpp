@@ -20,7 +20,7 @@ int main() {
 
             List<int>::Iterator iter = testList.begin();
 
-            testList.splice(iter + 500, scndList);
+            testList.splice(++iter, scndList);
             scndList.concat(testList);
             testList.concat(scndList);
             // // testList.pop_front();

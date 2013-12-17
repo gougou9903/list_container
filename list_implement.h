@@ -49,38 +49,6 @@ ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : 
     }
 }
 
-template <typename ContentsType>
-ListIterator<ContentsType> ListIterator<ContentsType>::operator+(int steps) {
-    ListNode<ContentsType>* temp = myNodePointer;
-
-    for (; steps > 0; --steps) {
-
-        temp = temp->getNextNodePointer();
-
-        if (temp == NULL) {
-            throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-        }
-    }
-
-    return ListIterator<ContentsType>(temp);
-}
-
-template <typename ContentsType>
-ListIterator<ContentsType> ListIterator<ContentsType>::operator-(int steps) {
-    ListNode<ContentsType>* temp = myNodePointer;
-
-    for (; steps > 0; --steps) {
-
-        temp = temp->getPreviousNodePointer();
-
-        if (temp == NULL) {
-            throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-        }
-    }
-
-    return ListIterator<ContentsType>(temp);
-}
-
 template <typename ContentsType> // postfix operator
 ListIterator<ContentsType> ListIterator<ContentsType>::operator++(int i) {
     ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
