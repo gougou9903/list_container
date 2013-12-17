@@ -14,8 +14,8 @@ ListNode<ContentsType>::ListNode(const ContentsType& _value) :  value(_value),
                                                                 previousNodePointer(NULL) {}
 
 template <typename ContentsType>
-ContentsType ListNode<ContentsType>::getValue() const {
-    return value;
+ContentsType& ListNode<ContentsType>::getValue() const {
+    return &value;
 }
 
 template <typename ContentsType>
@@ -77,9 +77,9 @@ template <typename ContentsType> // prefix operator
 ListIterator<ContentsType> ListIterator<ContentsType>::operator++() {
     ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
 
-        if (temp == NULL) {
-            throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-        }
+    if (temp == NULL) {
+        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
+    }
 
     myNodePointer = temp;
     return *this;
@@ -98,7 +98,7 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator--() {
 }
 
 template <typename ContentsType>
-ContentsType ListIterator<ContentsType>::operator*() {
+ContentsType& ListIterator<ContentsType>::operator*() {
     return myNodePointer->getValue();
 }
 

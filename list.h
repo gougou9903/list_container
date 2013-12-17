@@ -14,7 +14,7 @@ public:
      */
     ListNode(const ContentsType& _value);
 
-    ContentsType getValue() const;
+    ContentsType& getValue() const;
 
     ListNode* getNextNodePointer();
     ListNode* getPreviousNodePointer();
@@ -40,12 +40,11 @@ public:
      */
     ListIterator(ListNode<ContentsType>* nodePointer);
 
-    ListIterator operator++(int);
-    ListIterator operator++();
-    ListIterator operator--(int);
-    ListIterator operator--();
-    ContentsType operator*();
-
+    ListIterator        operator++(int);
+    ListIterator        operator++();
+    ListIterator        operator--(int);
+    ListIterator        operator--();
+    ContentsType&       operator*();
 
     ListNode<ContentsType>* getNodePointer();
     void rewriteNodePointer(ListNode<ContentsType>*);
