@@ -1,110 +1,22 @@
 #include <cstdlib>
 #include "exception.h"
-
-/************************************************
- * Node implementation
- ***********************************************/
-
-template <typename ContentsType>
-ListNode<ContentsType>::ListNode() : nextNodePointer(NULL), previousNodePointer(NULL) {}
-
-template <typename ContentsType>
-ListNode<ContentsType>::ListNode(const ContentsType& _value) :  value(_value),
-                                                                nextNodePointer(NULL),
-                                                                previousNodePointer(NULL) {}
-
-/************************************************
- *  Iterator implementation
- ***********************************************/
-
-template <typename ContentsType>
-ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : myNodePointer(nodePointer) {
-    if (nodePointer == NULL) {
-        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-    }
-}
-
-template <typename ContentsType> // postfix operator
-const ListIterator<ContentsType>& ListIterator<ContentsType>::operator++(int i) {
-    ListNode<ContentsType>* temp = myNodePointer->nextNodePointer;
-
-    if (temp == NULL) {
-        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-    }
-
-    myNodePointer = temp;
-    return *this;
-}
-
-template <typename ContentsType> // postfix operator
-const ListIterator<ContentsType>& ListIterator<ContentsType>::operator--(int i) {
-    ListNode<ContentsType>* temp = myNodePointer->previousNodePointer;
-
-    if (temp == NULL) {
-        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-    }
-
-    myNodePointer = temp;
-    return *this;
-}
-
-template <typename ContentsType> // prefix operator
-const ListIterator<ContentsType>& ListIterator<ContentsType>::operator++() {
-    ListNode<ContentsType>* temp = myNodePointer->nextNodePointer;
-
-    if (temp == NULL) {
-        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-    }
-
-    myNodePointer = temp;
-    return *this;
-}
-
-template <typename ContentsType> // prefix operator
-const ListIterator<ContentsType>& ListIterator<ContentsType>::operator--() {
-    ListNode<ContentsType>* temp = myNodePointer->previousNodePointer;
-
-    if (temp == NULL) {
-        throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
-    }
-
-    myNodePointer = temp;
-    return *this;
-}
-
-template <typename ContentsType>
-const ContentsType& ListIterator<ContentsType>::operator*() {
-    return myNodePointer->value;
-}
-
-template <typename ContentsType>
-void ListIterator<ContentsType>::rewriteNodePointer(ListNode<ContentsType>* pointer) {
-    if (pointer == NULL) {
-        throw Exception("Attempted to get iterator pointing to NULL", __FILE__, __LINE__);
-    }
-
-    myNodePointer = pointer;
-}
-
-
-/************************************************
- *  List implementation
- ***********************************************/
+#include "list_node_implement.h"
+#include "list_iterator_implement.h"
 
 template <typename ContentsType>
 List<ContentsType>::List() : firstNodePointer(NULL), lastNodePointer(NULL) {}
 
 template <typename ContentsType>
-List<ContentsType>::List(const ContentsType& _value) {
-    firstNodePointer    = new ListNode<ContentsType>(_value);
-    lastNodePointer     = firstNodePointer;
+List<ContentsType>::List(uint initSize) :   firstNodePointer(NULL),
+                                            lastNodePointer(NULL) {
+    for (int element = 1; element <= initSize; ++element) {
+        push_front();
+    }
 }
 
 template <typename ContentsType>
-List<ContentsType>::List(int elementsNumber, const ContentsType& _value) {
-    firstNodePointer    = new ListNode<ContentsType>(_value);
-    lastNodePointer     = firstNodePointer;
-
+List<ContentsType>::List(uint elementsNumber, const ContentsType& _value) : firstNodePointer(NULL),
+                                                                            lastNodePointer(NULL) {
     for (int element = 1; element <= elementsNumber; ++element) {
         push_front(_value);
     }
@@ -116,13 +28,13 @@ List<ContentsType>::~List() {
 }
 
 template <typename ContentsType>
-ListIterator<ContentsType> List<ContentsType>::begin() {
+ListIterator<ContentsType> List<ContentsType>::begin() const {
     ListIterator<ContentsType> iterator = ListIterator<ContentsType>(firstNodePointer);
     return iterator;
 }
 
 template <typename ContentsType>
-ListIterator<ContentsType> List<ContentsType>::end() {
+ListIterator<ContentsType> List<ContentsType>::end() const {
     ListIterator<ContentsType> iterator = ListIterator<ContentsType>(lastNodePointer);
     return iterator;
 }
@@ -183,6 +95,23 @@ void List<ContentsType>::push_front(const ContentsType& _value) {
 }
 
 template <typename ContentsType>
+void List<ContentsType>::push_front() {
+    if (firstNodePointer == NULL) {
+        firstNodePointer    = new ListNode<ContentsType>();
+        lastNodePointer     = firstNodePointer;
+    }
+    else {
+        ListNode<ContentsType>* newNode = new ListNode<ContentsType>();
+
+        newNode->nextNodePointer = firstNodePointer;
+
+        firstNodePointer->previousNodePointer = newNode;
+
+        rewriteFirstNodePointer(newNode);
+    }
+}
+
+template <typename ContentsType>
 void List<ContentsType>::push_back(const ContentsType& _value) {
     if (lastNodePointer == NULL) {
         lastNodePointer     = new ListNode<ContentsType>(_value);
@@ -190,6 +119,23 @@ void List<ContentsType>::push_back(const ContentsType& _value) {
     }
     else {
         ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
+
+        newNode->previousNodePointer = lastNodePointer;
+
+        lastNodePointer->nextNodePointer = newNode;
+
+        rewriteLastNodePointer(newNode);
+    }
+}
+
+template <typename ContentsType>
+void List<ContentsType>::push_back() {
+    if (lastNodePointer == NULL) {
+        lastNodePointer     = new ListNode<ContentsType>();
+        firstNodePointer    = lastNodePointer;
+    }
+    else {
+        ListNode<ContentsType>* newNode = new ListNode<ContentsType>();
 
         newNode->previousNodePointer = lastNodePointer;
 
@@ -224,53 +170,53 @@ void List<ContentsType>::pop_back() {
 }
 
 template <typename ContentsType>
-void List<ContentsType>::concat(List<ContentsType>& addedList) {
-    ListNode<ContentsType>* addedListFirstNode = addedList.getFirstNodePointer();
-    ListNode<ContentsType>* addedListLastNode = addedList.getLastNodePointer();
+void List<ContentsType>::concat(List<ContentsType>& listToAdd) {
+    ListNode<ContentsType>* listToAddFirstNode = listToAdd.getFirstNodePointer();
+    ListNode<ContentsType>* listToAddLastNode = listToAdd.getLastNodePointer();
 
-    if (addedListFirstNode == NULL) {
+    if (listToAddFirstNode == NULL) {
         return;
     }
 
     ListNode<ContentsType>* baseListLastNode = this->getLastNodePointer();
     if (baseListLastNode == NULL) {
-        this->rewriteFirstNodePointer(addedListFirstNode);
+        this->rewriteFirstNodePointer(listToAddFirstNode);
     }
     else {
-        baseListLastNode->nextNodePointer = addedListFirstNode;
+        baseListLastNode->nextNodePointer = listToAddFirstNode;
     }
-    this->rewriteLastNodePointer(addedListLastNode);
+    this->rewriteLastNodePointer(listToAddLastNode);
 
-    addedListFirstNode->previousNodePointer = baseListLastNode;
-    addedList.rewriteFirstNodePointer(NULL);
-    addedList.rewriteLastNodePointer(NULL);
+    listToAddFirstNode->previousNodePointer = baseListLastNode;
+    listToAdd.rewriteFirstNodePointer(NULL);
+    listToAdd.rewriteLastNodePointer(NULL);
 }
 
 template <typename ContentsType>
-void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsType>& addedList) {
-    ListNode<ContentsType>* addedListFirstNode = addedList.getFirstNodePointer();
-    ListNode<ContentsType>* addedListLastNode = addedList.getLastNodePointer();
+void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsType>& listToAdd) {
+    ListNode<ContentsType>* listToAddFirstNode = listToAdd.getFirstNodePointer();
+    ListNode<ContentsType>* listToAddLastNode = listToAdd.getLastNodePointer();
 
-    if (addedListFirstNode == NULL) {
+    if (listToAddFirstNode == NULL) {
         return;
     }
 
     ListNode<ContentsType>* iterNodePointer = iter.myNodePointer;
     ListNode<ContentsType>* afterIterNodePointer = iterNodePointer->nextNodePointer;
 
-    addedListFirstNode->previousNodePointer = iterNodePointer;
-    addedListLastNode->nextNodePointer = afterIterNodePointer;
+    listToAddFirstNode->previousNodePointer = iterNodePointer;
+    listToAddLastNode->nextNodePointer = afterIterNodePointer;
 
-    iterNodePointer->nextNodePointer = addedListFirstNode;
+    iterNodePointer->nextNodePointer = listToAddFirstNode;
     if (afterIterNodePointer == NULL) {
-        rewriteLastNodePointer(addedListLastNode);
+        rewriteLastNodePointer(listToAddLastNode);
     }
     else {
-        afterIterNodePointer->previousNodePointer = addedListLastNode;
+        afterIterNodePointer->previousNodePointer = listToAddLastNode;
     }
 
-    addedList.rewriteFirstNodePointer(NULL);
-    addedList.rewriteLastNodePointer(NULL);
+    listToAdd.rewriteFirstNodePointer(NULL);
+    listToAdd.rewriteLastNodePointer(NULL);
 }
 
 template <typename ContentsType>
@@ -326,7 +272,6 @@ ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> 
         return ListIterator<ContentsType>(previousNodePointer);
     }
 
-    // iter.rewriteNodePointer(nextNodePointer);
     return ListIterator<ContentsType>(nextNodePointer);
 }
 
@@ -350,9 +295,9 @@ void List<ContentsType>::clear() {
 }
 
 template <typename ContentsType>
-long int List<ContentsType>::size() const {
+unsigned long int List<ContentsType>::size() const {
     ListNode<ContentsType>* nextNodePointer = firstNodePointer;
-    long int counter = 0;
+    unsigned long int counter = 0;
 
     while (nextNodePointer != NULL) {
         ++counter;

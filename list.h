@@ -27,7 +27,7 @@ private:
 
 /**
  * List iterator class for doubly linked list, has basic arithmetic
- * operators overloaded for easy list use
+ * operators overloaded for easy list usage
  */
 template <typename ContentsType>
 class ListIterator {
@@ -35,11 +35,11 @@ class ListIterator {
 public:
     ListNode<ContentsType>* myNodePointer;
 
-    const ListIterator&   operator++(int);
-    const ListIterator&   operator++();
-    const ListIterator&   operator--(int);
-    const ListIterator&   operator--();
-    const ContentsType&   operator*();
+    const ListIterator& operator++(int);
+    const ListIterator& operator++();
+    const ListIterator& operator--(int);
+    const ListIterator& operator--();
+    const ContentsType& operator*();
 
     void rewriteNodePointer(ListNode<ContentsType>*);
 
@@ -48,7 +48,7 @@ private:
      * Constructs an iterator of the list
      * @param nodePointer Iterator points to the associated node
      */
-    ListIterator(ListNode<ContentsType>* nodePointer);
+    explicit ListIterator(ListNode<ContentsType>* nodePointer);
 };
 
 /**
@@ -63,59 +63,60 @@ public:
     List();
 
     /**
-    * Constructs a list
-    * @param _value Value saved in the first list node
+    * Constructs a list with specified number of empty nodes
+    * @param initSize Number of empty nodes in the list
     */
-    List(const ContentsType& _value);
+    explicit List(uint initSize);
 
     /**
      * Constructs a list
      * @param elementsNumber Number of list nodes
      * @param _value Value saved in all created list nodes
      */
-    List(int elementsNumber, const ContentsType& _value);
+    explicit List(uint elementsNumber, const ContentsType& _value);
 
-    ~List();
+    virtual ~List();
 
     typedef ListIterator<ContentsType> Iterator;
     typedef ListNode<ContentsType> Node;
 
-    Iterator begin();
-    Iterator end();
+    Iterator begin() const;
+    Iterator end() const;
 
     ContentsType front();
     ContentsType back();
-
 
     /**
      * Adds a node to the front of the list
      * @param _value Value saved in the new list node
      */
     void push_front(const ContentsType& _value);
+    void push_front();
 
     /**
      * Adds a node to the back of the list
      * @param _value Value saved in the new list node
      */
     void push_back(const ContentsType& _value);
+    void push_back();
 
     void pop_front();
     void pop_back();
 
     /**
      * Concatenates calling list and the list given as an arguement
-     * @param addedList Elements of this list will be placed to the end of
+     * @param listToAdd Elements of this list will be placed to the end of
      * the calling list, will be left empty afterwards (not deleted)
      */
-    void concat(List& addedList);
+    void concat(List& listToAdd);
 
     /**
      * Adds elements of the list given as an arguement to the calling list at the iterator position
-     * @param Iter adds elements after this iterator position
-     * @param AddedList elements of this list will added tothe calling list,
+     * @param iter adds elements after this iterator position
+     * @param listToAdd elements of this list will be added to the calling list,
      * will be left empty afterwards (not deleted)
      */
-    void splice(Iterator iter, List& addedList);
+    void splice(Iterator iter, List& listToAdd);
 
     bool empty() const;
 
@@ -139,7 +140,7 @@ public:
      */
     void clear();
 
-    long int size() const;
+    unsigned long int size() const;
 
 private:
     Node* getFirstNodePointer();
