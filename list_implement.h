@@ -13,31 +13,6 @@ ListNode<ContentsType>::ListNode(const ContentsType& _value) :  value(_value),
                                                                 nextNodePointer(NULL),
                                                                 previousNodePointer(NULL) {}
 
-template <typename ContentsType>
-ContentsType& ListNode<ContentsType>::getValue() const {
-    return &value;
-}
-
-template <typename ContentsType>
-ListNode<ContentsType>* ListNode<ContentsType>::getNextNodePointer() {
-    return nextNodePointer;
-}
-
-template <typename ContentsType>
-ListNode<ContentsType>* ListNode<ContentsType>::getPreviousNodePointer() {
-    return previousNodePointer;
-}
-
-template <typename ContentsType>
-void ListNode<ContentsType>::rewriteNextNodePointer(ListNode<ContentsType>* nodePointer) {
-    nextNodePointer = nodePointer;
-}
-
-template <typename ContentsType>
-void ListNode<ContentsType>::rewritePreviousNodePointer(ListNode<ContentsType>* nodePointer) {
-    previousNodePointer = nodePointer;
-}
-
 /************************************************
  *  Iterator implementation
  ***********************************************/
@@ -50,8 +25,8 @@ ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : 
 }
 
 template <typename ContentsType> // postfix operator
-ListIterator<ContentsType> ListIterator<ContentsType>::operator++(int i) {
-    ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
+const ListIterator<ContentsType>& ListIterator<ContentsType>::operator++(int i) {
+    ListNode<ContentsType>* temp = myNodePointer->nextNodePointer;
 
     if (temp == NULL) {
         throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
@@ -62,8 +37,8 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator++(int i) {
 }
 
 template <typename ContentsType> // postfix operator
-ListIterator<ContentsType> ListIterator<ContentsType>::operator--(int i) {
-    ListNode<ContentsType>* temp = myNodePointer->getPreviousNodePointer();
+const ListIterator<ContentsType>& ListIterator<ContentsType>::operator--(int i) {
+    ListNode<ContentsType>* temp = myNodePointer->previousNodePointer;
 
     if (temp == NULL) {
         throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
@@ -74,8 +49,8 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator--(int i) {
 }
 
 template <typename ContentsType> // prefix operator
-ListIterator<ContentsType> ListIterator<ContentsType>::operator++() {
-    ListNode<ContentsType>* temp = myNodePointer->getNextNodePointer();
+const ListIterator<ContentsType>& ListIterator<ContentsType>::operator++() {
+    ListNode<ContentsType>* temp = myNodePointer->nextNodePointer;
 
     if (temp == NULL) {
         throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
@@ -86,8 +61,8 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator++() {
 }
 
 template <typename ContentsType> // prefix operator
-ListIterator<ContentsType> ListIterator<ContentsType>::operator--() {
-    ListNode<ContentsType>* temp = myNodePointer->getPreviousNodePointer();
+const ListIterator<ContentsType>& ListIterator<ContentsType>::operator--() {
+    ListNode<ContentsType>* temp = myNodePointer->previousNodePointer;
 
     if (temp == NULL) {
         throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
@@ -98,13 +73,8 @@ ListIterator<ContentsType> ListIterator<ContentsType>::operator--() {
 }
 
 template <typename ContentsType>
-ContentsType& ListIterator<ContentsType>::operator*() {
-    return myNodePointer->getValue();
-}
-
-template <typename ContentsType>
-ListNode<ContentsType>* ListIterator<ContentsType>::getNodePointer() {
-    return myNodePointer;
+const ContentsType& ListIterator<ContentsType>::operator*() {
+    return myNodePointer->value;
 }
 
 template <typename ContentsType>
@@ -163,7 +133,7 @@ ContentsType List<ContentsType>::front() {
         throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
-    return firstNodePointer->getValue();
+    return firstNodePointer->value;
 }
 
 template <typename ContentsType>
@@ -172,7 +142,7 @@ ContentsType List<ContentsType>::back() {
         throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
-    return lastNodePointer->getValue();
+    return lastNodePointer->value;
 }
 
 template <typename ContentsType>
@@ -204,9 +174,9 @@ void List<ContentsType>::push_front(const ContentsType& _value) {
     else {
         ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
 
-        newNode->rewriteNextNodePointer(firstNodePointer);
+        newNode->nextNodePointer = firstNodePointer;
 
-        firstNodePointer->rewritePreviousNodePointer(newNode);
+        firstNodePointer->previousNodePointer = newNode;
 
         rewriteFirstNodePointer(newNode);
     }
@@ -221,9 +191,9 @@ void List<ContentsType>::push_back(const ContentsType& _value) {
     else {
         ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
 
-        newNode->rewritePreviousNodePointer(lastNodePointer);
+        newNode->previousNodePointer = lastNodePointer;
 
-        lastNodePointer->rewriteNextNodePointer(newNode);
+        lastNodePointer->nextNodePointer = newNode;
 
         rewriteLastNodePointer(newNode);
     }
@@ -235,10 +205,10 @@ void List<ContentsType>::pop_front() {
         throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
-    ListNode<ContentsType>* newFirstNodePointer = firstNodePointer->getNextNodePointer();
+    ListNode<ContentsType>* newFirstNodePointer = firstNodePointer->nextNodePointer;
     delete firstNodePointer;
     rewriteFirstNodePointer(newFirstNodePointer);
-    newFirstNodePointer->rewritePreviousNodePointer(NULL);
+    newFirstNodePointer->previousNodePointer = NULL;
 }
 
 template <typename ContentsType>
@@ -247,10 +217,10 @@ void List<ContentsType>::pop_back() {
         throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
 
-    ListNode<ContentsType>* newLastNodePointer = lastNodePointer->getPreviousNodePointer();
+    ListNode<ContentsType>* newLastNodePointer = lastNodePointer->previousNodePointer;
     delete lastNodePointer;
     rewriteLastNodePointer(newLastNodePointer);
-    newLastNodePointer->rewriteNextNodePointer(NULL);
+    newLastNodePointer->nextNodePointer = NULL;
 }
 
 template <typename ContentsType>
@@ -267,11 +237,11 @@ void List<ContentsType>::concat(List<ContentsType>& addedList) {
         this->rewriteFirstNodePointer(addedListFirstNode);
     }
     else {
-        baseListLastNode->rewriteNextNodePointer(addedListFirstNode);
+        baseListLastNode->nextNodePointer = addedListFirstNode;
     }
     this->rewriteLastNodePointer(addedListLastNode);
 
-    addedListFirstNode->rewritePreviousNodePointer(baseListLastNode);
+    addedListFirstNode->previousNodePointer = baseListLastNode;
     addedList.rewriteFirstNodePointer(NULL);
     addedList.rewriteLastNodePointer(NULL);
 }
@@ -285,18 +255,18 @@ void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsTy
         return;
     }
 
-    ListNode<ContentsType>* iterNodePointer = iter.getNodePointer();
-    ListNode<ContentsType>* afterIterNodePointer = iterNodePointer->getNextNodePointer();
+    ListNode<ContentsType>* iterNodePointer = iter.myNodePointer;
+    ListNode<ContentsType>* afterIterNodePointer = iterNodePointer->nextNodePointer;
 
-    addedListFirstNode->rewritePreviousNodePointer(iterNodePointer);
-    addedListLastNode->rewriteNextNodePointer(afterIterNodePointer);
+    addedListFirstNode->previousNodePointer = iterNodePointer;
+    addedListLastNode->nextNodePointer = afterIterNodePointer;
 
-    iterNodePointer->rewriteNextNodePointer(addedListFirstNode);
+    iterNodePointer->nextNodePointer = addedListFirstNode;
     if (afterIterNodePointer == NULL) {
         rewriteLastNodePointer(addedListLastNode);
     }
     else {
-        afterIterNodePointer->rewritePreviousNodePointer(addedListLastNode);
+        afterIterNodePointer->previousNodePointer = addedListLastNode;
     }
 
     addedList.rewriteFirstNodePointer(NULL);
@@ -311,20 +281,20 @@ bool List<ContentsType>::empty() const {
 template <typename ContentsType>
 ListIterator<ContentsType> List<ContentsType>::insert(ListIterator<ContentsType> iter,
                                                       const ContentsType& _value) {
-    ListNode<ContentsType>* iteratorNodePointer = iter.getNodePointer();
-    ListNode<ContentsType>* previousNodePointer = iteratorNodePointer->getPreviousNodePointer();
+    ListNode<ContentsType>* iteratorNodePointer = iter.myNodePointer;
+    ListNode<ContentsType>* previousNodePointer = iteratorNodePointer->previousNodePointer;
 
     ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
-    newNode->rewriteNextNodePointer(iteratorNodePointer);
-    newNode->rewritePreviousNodePointer(previousNodePointer);
+    newNode->nextNodePointer = iteratorNodePointer;
+    newNode->previousNodePointer = previousNodePointer;
 
-    iteratorNodePointer->rewritePreviousNodePointer(newNode);
+    iteratorNodePointer->previousNodePointer = newNode;
 
     if (previousNodePointer == NULL) {
         rewriteFirstNodePointer(newNode);
     }
     else {
-        previousNodePointer->rewriteNextNodePointer(newNode);
+        previousNodePointer->nextNodePointer = newNode;
     }
 
     return ListIterator<ContentsType>(newNode);
@@ -332,21 +302,21 @@ ListIterator<ContentsType> List<ContentsType>::insert(ListIterator<ContentsType>
 
 template <typename ContentsType>
 ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> iter) {
-    ListNode<ContentsType>* iteratorNodePointer = iter.getNodePointer();
-    ListNode<ContentsType>* nextNodePointer     = iteratorNodePointer->getNextNodePointer();
-    ListNode<ContentsType>* previousNodePointer = iteratorNodePointer->getPreviousNodePointer();
+    ListNode<ContentsType>* iteratorNodePointer = iter.myNodePointer;
+    ListNode<ContentsType>* nextNodePointer     = iteratorNodePointer->nextNodePointer;
+    ListNode<ContentsType>* previousNodePointer = iteratorNodePointer->previousNodePointer;
 
     delete iteratorNodePointer;
 
     if (previousNodePointer != NULL) {
-        previousNodePointer->rewriteNextNodePointer(nextNodePointer);
+        previousNodePointer->nextNodePointer = nextNodePointer;
     }
     else {
         rewriteFirstNodePointer(nextNodePointer);
     }
 
     if (nextNodePointer != NULL) {
-        nextNodePointer->rewritePreviousNodePointer(previousNodePointer);
+        nextNodePointer->previousNodePointer = previousNodePointer;
     }
     else {
         rewriteLastNodePointer(previousNodePointer);
@@ -364,12 +334,12 @@ template <typename ContentsType>
 void List<ContentsType>::clear() {
     if (firstNodePointer != NULL) {
         ListNode<ContentsType>* nodeToDelete = firstNodePointer;
-        ListNode<ContentsType>* nextNodeToDelete = firstNodePointer->getNextNodePointer();
+        ListNode<ContentsType>* nextNodeToDelete = firstNodePointer->nextNodePointer;
 
         while (nextNodeToDelete != NULL) {
             delete nodeToDelete;
             nodeToDelete = nextNodeToDelete;
-            nextNodeToDelete = nextNodeToDelete->getNextNodePointer();
+            nextNodeToDelete = nextNodeToDelete->nextNodePointer;
         }
 
         delete lastNodePointer;
@@ -386,7 +356,7 @@ long int List<ContentsType>::size() const {
 
     while (nextNodePointer != NULL) {
         ++counter;
-        nextNodePointer = nextNodePointer->getNextNodePointer();
+        nextNodePointer = nextNodePointer->nextNodePointer;
     }
 
     return counter;

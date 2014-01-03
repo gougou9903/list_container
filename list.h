@@ -1,9 +1,19 @@
+template <typename ContentsType> class ListNode;
+template <typename ContentsType> class ListIterator;
+template <typename ContentsType> class List;
+
 /**
  * Node class for doubly linked list
  */
 template <typename ContentsType>
 class ListNode {
+    friend class List<ContentsType>;
 public:
+    ListNode* nextNodePointer;
+    ListNode* previousNodePointer;
+    ContentsType value;
+
+private:
     /**
     * Constructs an empty element of the list, points to NULL by default
     */
@@ -13,18 +23,6 @@ public:
      * Constructs an element of the list, points to NULL by default
      */
     ListNode(const ContentsType& _value);
-
-    ContentsType& getValue() const;
-
-    ListNode* getNextNodePointer();
-    ListNode* getPreviousNodePointer();
-    void rewriteNextNodePointer(ListNode* nodePointer);
-    void rewritePreviousNodePointer(ListNode* nodePointer);
-
-private:
-    ListNode* nextNodePointer;
-    ListNode* previousNodePointer;
-    ContentsType value;
 };
 
 /**
@@ -33,24 +31,24 @@ private:
  */
 template <typename ContentsType>
 class ListIterator {
+    friend class List<ContentsType>;
 public:
+    ListNode<ContentsType>* myNodePointer;
+
+    const ListIterator&   operator++(int);
+    const ListIterator&   operator++();
+    const ListIterator&   operator--(int);
+    const ListIterator&   operator--();
+    const ContentsType&   operator*();
+
+    void rewriteNodePointer(ListNode<ContentsType>*);
+
+private:
     /**
      * Constructs an iterator of the list
      * @param nodePointer Iterator points to the associated node
      */
     ListIterator(ListNode<ContentsType>* nodePointer);
-
-    ListIterator        operator++(int);
-    ListIterator        operator++();
-    ListIterator        operator--(int);
-    ListIterator        operator--();
-    ContentsType&       operator*();
-
-    ListNode<ContentsType>* getNodePointer();
-    void rewriteNodePointer(ListNode<ContentsType>*);
-
-private:
-    ListNode<ContentsType>* myNodePointer;
 };
 
 /**
@@ -80,9 +78,10 @@ public:
     ~List();
 
     typedef ListIterator<ContentsType> Iterator;
+    typedef ListNode<ContentsType> Node;
 
-    ListIterator<ContentsType> begin();
-    ListIterator<ContentsType> end();
+    Iterator begin();
+    Iterator end();
 
     ContentsType front();
     ContentsType back();
@@ -116,7 +115,7 @@ public:
      * @param AddedList elements of this list will added tothe calling list,
      * will be left empty afterwards (not deleted)
      */
-    void splice(ListIterator<ContentsType> iter, List& addedList);
+    void splice(Iterator iter, List& addedList);
 
     bool empty() const;
 
@@ -126,15 +125,14 @@ public:
      * @param _value New node will store this value
      * @return The iterator for the new node
      */
-    ListIterator<ContentsType> insert(ListIterator<ContentsType> iter,
-                                      const ContentsType& _value);
+    Iterator insert(Iterator iter, const ContentsType& _value);
 
     /**
      * Deletes the node corresponding to the given iterator
      * @param iter Iterator of the element to delete
      * @return The iterator for the next node or for the end of the list if the last element was deleted
      */
-    ListIterator<ContentsType> erase(ListIterator<ContentsType> iter);
+    Iterator erase(Iterator iter);
 
     /**
      * Deletes all the elements of the list
@@ -144,14 +142,14 @@ public:
     long int size() const;
 
 private:
-    ListNode<ContentsType>* getFirstNodePointer();
-    ListNode<ContentsType>* getLastNodePointer();
+    Node* getFirstNodePointer();
+    Node* getLastNodePointer();
 
-    void rewriteFirstNodePointer(ListNode<ContentsType>* newNode);
-    void rewriteLastNodePointer(ListNode<ContentsType>* newNode);
+    void rewriteFirstNodePointer(Node* newNode);
+    void rewriteLastNodePointer(Node* newNode);
 
-    ListNode<ContentsType>* firstNodePointer;
-    ListNode<ContentsType>* lastNodePointer;
+    Node* firstNodePointer;
+    Node* lastNodePointer;
 };
 
 #include "list_implement.h"
