@@ -164,6 +164,10 @@ private:
     void rewriteFirstNodePointer(Node* newNode);
     void rewriteLastNodePointer(Node* newNode);
 
+    void deleteNode(Node*);
+    void insertNewNodeBeforeExistingNode(ListNode<ContentsType>* newNode,
+                                         ListNode<ContentsType>* existingNode);
+
     Node* firstNodePointer;
     Node* lastNodePointer;
 };
