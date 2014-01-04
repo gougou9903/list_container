@@ -40,7 +40,7 @@ ListIterator<ContentsType> List<ContentsType>::end() const {
 }
 
 template <typename ContentsType>
-ContentsType List<ContentsType>::front() {
+ContentsType& List<ContentsType>::front() {
     if (firstNodePointer == NULL) {
         throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
@@ -49,7 +49,25 @@ ContentsType List<ContentsType>::front() {
 }
 
 template <typename ContentsType>
-ContentsType List<ContentsType>::back() {
+const ContentsType& List<ContentsType>::front() const {
+    if (firstNodePointer == NULL) {
+        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
+    }
+
+    return firstNodePointer->value;
+}
+
+template <typename ContentsType>
+ContentsType& List<ContentsType>::back() {
+    if (lastNodePointer == NULL) {
+        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
+    }
+
+    return lastNodePointer->value;
+}
+
+template <typename ContentsType>
+const ContentsType& List<ContentsType>::back() const {
     if (lastNodePointer == NULL) {
         throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
     }
