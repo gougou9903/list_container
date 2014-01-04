@@ -5,6 +5,17 @@ ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : 
     }
 }
 
+template <typename ContentsType>
+bool ListIterator<ContentsType>::operator==(ListIterator<ContentsType>& comparedIter) {
+    return ( *(this->myNodePointer) == *(comparedIter.myNodePointer) );
+}
+
+template <typename ContentsType>
+bool ListIterator<ContentsType>::operator!=(ListIterator<ContentsType>& comparedIter) {
+    return !( *(this) == comparedIter );
+}
+
+
 template <typename ContentsType> // postfix operator
 const ListIterator<ContentsType>& ListIterator<ContentsType>::operator++(int i) {
     ListNode<ContentsType>* temp = myNodePointer->nextNodePointer;
