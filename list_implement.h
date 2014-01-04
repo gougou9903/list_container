@@ -122,6 +122,40 @@ void List<ContentsType>::push_back() {
 }
 
 template <typename ContentsType>
+void List<ContentsType>::insertNewNodeBeforeExistingNode(ListNode<ContentsType>* newNode,
+                                     ListNode<ContentsType>* existingNode) {
+    ListNode<ContentsType>* END_OF_LIST = NULL;
+    ListNode<ContentsType>* START_OF_LIST = NULL;
+
+    if (empty() ) {
+        rewriteFirstNodePointer(newNode);
+        rewriteLastNodePointer(newNode);
+    }
+    else {
+        ListNode<ContentsType>* previousNode;
+
+        if (existingNode == END_OF_LIST) {
+            previousNode = lastNodePointer;
+            rewriteLastNodePointer(newNode);
+        }
+        else {
+            previousNode = existingNode->previousNodePointer;
+            existingNode->previousNodePointer = newNode;
+        }
+
+        if (previousNode == START_OF_LIST) {
+            rewriteFirstNodePointer(newNode);
+        }
+        else {
+            previousNode->nextNodePointer = newNode;
+        }
+
+        newNode->nextNodePointer = existingNode;
+        newNode->previousNodePointer = previousNode;
+    }
+}
+
+template <typename ContentsType>
 void List<ContentsType>::pop_front() {
     if (empty() ) {
         throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
@@ -185,7 +219,7 @@ void List<ContentsType>::concat(List<ContentsType>& listToAdd) {
 }
 
 template <typename ContentsType>
-void List<ContentsType>::splice(ListIterator<ContentsType> iter, List<ContentsType>& listToAdd) {
+void List<ContentsType>::splice(const ListIterator<ContentsType>& iter, List<ContentsType>& listToAdd) {
     ListNode<ContentsType>* listToAddFirstNode = listToAdd.getFirstNodePointer();
     ListNode<ContentsType>* listToAddLastNode = listToAdd.getLastNodePointer();
 
@@ -217,7 +251,7 @@ bool List<ContentsType>::empty() const {
 }
 
 template <typename ContentsType>
-ListIterator<ContentsType> List<ContentsType>::insert(ListIterator<ContentsType> iter,
+ListIterator<ContentsType> List<ContentsType>::insert(const ListIterator<ContentsType>& iter,
                                                       const ContentsType& _value) {
     ListNode<ContentsType>* newNode = new ListNode<ContentsType>(_value);
     insertNewNodeBeforeExistingNode(newNode, iter.myNodePointer);
@@ -226,41 +260,7 @@ ListIterator<ContentsType> List<ContentsType>::insert(ListIterator<ContentsType>
 }
 
 template <typename ContentsType>
-void List<ContentsType>::insertNewNodeBeforeExistingNode(ListNode<ContentsType>* newNode,
-                                     ListNode<ContentsType>* existingNode) {
-    ListNode<ContentsType>* END_OF_LIST = NULL;
-    ListNode<ContentsType>* START_OF_LIST = NULL;
-
-    if (empty() ) {
-        rewriteFirstNodePointer(newNode);
-        rewriteLastNodePointer(newNode);
-    }
-    else {
-        ListNode<ContentsType>* previousNode;
-
-        if (existingNode == END_OF_LIST) {
-            previousNode = lastNodePointer;
-            rewriteLastNodePointer(newNode);
-        }
-        else {
-            previousNode = existingNode->previousNodePointer;
-            existingNode->previousNodePointer = newNode;
-        }
-
-        if (previousNode == START_OF_LIST) {
-            rewriteFirstNodePointer(newNode);
-        }
-        else {
-            previousNode->nextNodePointer = newNode;
-        }
-
-        newNode->nextNodePointer = existingNode;
-        newNode->previousNodePointer = previousNode;
-    }
-}
-
-template <typename ContentsType>
-ListIterator<ContentsType> List<ContentsType>::erase(ListIterator<ContentsType> iter) {
+ListIterator<ContentsType> List<ContentsType>::erase(const ListIterator<ContentsType>& iter) {
     ListNode<ContentsType>* nodeToPointForReturnedIter = iter.myNodePointer->nextNodePointer;
 
     if (iter == end() ) {

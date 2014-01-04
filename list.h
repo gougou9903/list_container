@@ -131,7 +131,7 @@ public:
      * @param listToAdd elements of this list will be added to the calling list,
      * will be left empty afterwards (not deleted)
      */
-    void splice(Iterator iter, List& listToAdd);
+    void splice(const Iterator& iter, List& listToAdd);
 
     bool empty() const;
 
@@ -141,14 +141,14 @@ public:
      * @param _value New node will store this value
      * @return The iterator for the new node
      */
-    Iterator insert(Iterator iter, const ContentsType& _value);
+    Iterator insert(const Iterator& iter, const ContentsType& _value);
 
     /**
      * Deletes the node corresponding to the given iterator
      * @param iter Iterator of the element to delete
      * @return The iterator for the next node or for the end of the list if the last element was deleted
      */
-    Iterator erase(Iterator iter);
+    Iterator erase(const Iterator& iter);
 
     /**
      * Deletes all the elements of the list
