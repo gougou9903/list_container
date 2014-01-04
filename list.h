@@ -13,6 +13,8 @@ public:
     ListNode* previousNodePointer;
     ContentsType value;
 
+    bool operator==(ListNode&);
+    bool operator!=(ListNode&);
 private:
     /**
     * Constructs an empty element of the list, points to NULL by default
@@ -33,15 +35,19 @@ template <typename ContentsType>
 class ListIterator {
     friend class List<ContentsType>;
 public:
-    ListNode<ContentsType>* myNodePointer;
+    typedef ListNode<ContentsType> Node;
 
+    Node* myNodePointer;
+
+    bool operator==(ListIterator&);
+    bool operator!=(ListIterator&);
     const ListIterator& operator++(int);
     const ListIterator& operator++();
     const ListIterator& operator--(int);
     const ListIterator& operator--();
     const ContentsType& operator*();
 
-    void rewriteNodePointer(ListNode<ContentsType>*);
+    void rewriteNodePointer(Node*);
 
 private:
     /**
@@ -56,7 +62,11 @@ private:
  */
 template <typename ContentsType>
 class List {
+
 public:
+    typedef ListIterator<ContentsType> Iterator;
+    typedef ListNode<ContentsType> Node;
+
     /**
      * Constructs an empty list
      */
@@ -77,20 +87,23 @@ public:
 
     virtual ~List();
 
-    typedef ListIterator<ContentsType> Iterator;
-    typedef ListNode<ContentsType> Node;
 
     Iterator begin() const;
     Iterator end() const;
 
-    ContentsType front();
-    ContentsType back();
+    ContentsType& front();
+    ContentsType& back();
+    const ContentsType& front() const;
+    const ContentsType& back() const;
 
     /**
      * Adds a node to the front of the list
      * @param _value Value saved in the new list node
      */
     void push_front(const ContentsType& _value);
+    /**
+     * Adds an empty node to the front of the list
+     */
     void push_front();
 
     /**
@@ -98,6 +111,9 @@ public:
      * @param _value Value saved in the new list node
      */
     void push_back(const ContentsType& _value);
+    /**
+     * Adds an empty node to the back of the list
+     */
     void push_back();
 
     void pop_front();
