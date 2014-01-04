@@ -1,5 +1,7 @@
 template <typename ContentsType>
-ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer) : myNodePointer(nodePointer) {
+ListIterator<ContentsType>::ListIterator(ListNode<ContentsType>* nodePointer)
+    : myNodePointer(nodePointer) {
+
     if (nodePointer == NULL) {
         throw Exception("Attempted to go outside the list", __FILE__, __LINE__);
     }
