@@ -268,6 +268,7 @@ ListIterator<ContentsType> List<ContentsType>::erase(const ListIterator<Contents
     }
 
     deleteNode(iter.myNodePointer);
+    iter.myNodePointer = NULL;
 
     return ListIterator<ContentsType>(nodeToPointForReturnedIter);
 }
