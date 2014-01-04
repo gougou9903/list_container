@@ -2,6 +2,7 @@ CC=g++
 
 all: clean print create_build_dir
 	$(CC) main.cpp exception.cpp -o product/myList.exe
+	$(CC) api_test.cpp exception.cpp -o product/tester.exe
 
 clean:
 	@echo -------------------------------------------------
