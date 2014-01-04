@@ -5,15 +5,17 @@
 
 int main() {
     try {
-        test_size(100);
+        test_size();
         test_empty();
         test_clear();
-        test_push_front_and_front(10);
-        test_push_back_and_back(10);
-        test_concat(20);
+        test_push_front_and_front();
+        test_push_back_and_back();
+        test_concat();
 
         test_iterator_deref_operator();
+        test_iterator_equal_unequal_operators();
         test_iterator_pre_increment_operator();
+        test_iterator_pre_decrement_operator();
 
         std::cout << "SUCCESS: All tests completed"
                   << std::endl;
@@ -29,10 +31,13 @@ int main() {
     }
 }
 
-void test_push_front_and_front(int pushValue) {
-    const int dummyValue = 0;
+void test_push_front_and_front() {
+    const int DUMMY_VALUE = 0;
+
+    uint pushValue = makeBoundedRandomNumber();
+
     List<int> testList = List<int>();
-    testList.push_front(dummyValue);
+    testList.push_front(DUMMY_VALUE);
     testList.push_front(pushValue);
 
     int frontValue = testList.front();
@@ -42,8 +47,10 @@ void test_push_front_and_front(int pushValue) {
     }
 }
 
-void test_push_back_and_back(int pushValue) {
+void test_push_back_and_back() {
     const int DUMMY_VALUE = 0;
+
+    uint pushValue = makeBoundedRandomNumber();
 
     List<int> testList = List<int>();
     testList.push_back(DUMMY_VALUE);
@@ -56,7 +63,9 @@ void test_push_back_and_back(int pushValue) {
     }
 }
 
-void test_concat(uint initListSizes) {
+void test_concat() {
+    uint initListSizes = makeBoundedRandomNumber();
+
     std::vector<int> firstVector = makeRandomVector();
     std::vector<int> secondVector = makeRandomVector();
     std::vector<int> concatedVector = makeConcatedVector(firstVector, secondVector);
@@ -80,9 +89,7 @@ void test_concat(uint initListSizes) {
 }
 
 std::vector<int> makeRandomVector() {
-    const uint RAND_HIGH_BORDER = 1000;
-
-    uint vectSize = rand() % RAND_HIGH_BORDER + 1;
+    uint vectSize = makeBoundedRandomNumber();
     std::vector<int> vect(vectSize);
 
     uint size = vect.size();
@@ -91,6 +98,12 @@ std::vector<int> makeRandomVector() {
     }
 
     return vect;
+}
+
+uint makeBoundedRandomNumber() {
+    const uint RAND_HIGH_BORDER = 1000;
+
+    return rand() % RAND_HIGH_BORDER + 1;
 }
 
 List<int> makeListFromVector(std::vector<int>& vect) {
@@ -141,7 +154,8 @@ void test_clear() {
 
 }
 
-void test_size(uint wantedSize) {
+void test_size() {
+    uint wantedSize = makeBoundedRandomNumber();
     List<int> list = List<int>(wantedSize);
     uint actualSize = list.size();
 
@@ -162,6 +176,20 @@ void test_iterator_deref_operator() {
     }
 }
 
+void test_iterator_equal_unequal_operators() {
+    const uint TEST_LIST_SIZE = 1;
+
+    int storedVal = rand();
+    List<int> list = List<int>(TEST_LIST_SIZE, storedVal);
+
+    List<int>::Iterator firstIter = list.begin();
+    List<int>::Iterator secondIter = list.end();
+
+    if (firstIter != secondIter) {
+        throw Exception("ERROR - 'operator==' test failed", __FILE__, __LINE__);
+    }
+}
+
 void test_iterator_pre_increment_operator() {
     std::vector<int> vector = makeRandomVector();
     List<int> list = makeListFromVector(vector);
@@ -177,6 +205,24 @@ void test_iterator_pre_increment_operator() {
 
         if (iter != listEnd) {
             iter = ++iter;
+        }
+    }
+}
+
+void test_iterator_pre_decrement_operator() {
+    std::vector<int> vector = makeRandomVector();
+    List<int> list = makeListFromVector(vector);
+    List<int>::Iterator iter = list.end();
+    List<int>::Iterator listBegin = list.begin();
+    uint size = vector.size();
+
+    for (int i = size - 1; i >= 0; --i) {
+        if (*iter != vector[i]) {
+            throw Exception("ERROR - 'operator--' test failed", __FILE__, __LINE__);
+        }
+
+        if (iter != listBegin) {
+            iter = --iter;
         }
     }
 }
