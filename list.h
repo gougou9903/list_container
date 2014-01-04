@@ -35,10 +35,6 @@ template <typename ContentsType>
 class ListIterator {
     friend class List<ContentsType>;
 public:
-    typedef ListNode<ContentsType> Node;
-
-    Node* myNodePointer;
-
     bool operator==(ListIterator&);
     bool operator!=(ListIterator&);
     const ListIterator& operator++(int);
@@ -47,14 +43,18 @@ public:
     const ListIterator& operator--();
     const ContentsType& operator*();
 
-    void rewriteNodePointer(Node*);
-
 private:
+    typedef ListNode<ContentsType> Node;
+
+    Node* myNodePointer;
+
     /**
      * Constructs an iterator of the list
      * @param nodePointer Iterator points to the associated node
      */
     explicit ListIterator(ListNode<ContentsType>* nodePointer);
+
+    void rewriteNodePointer(Node*);
 };
 
 /**
@@ -62,7 +62,6 @@ private:
  */
 template <typename ContentsType>
 class List {
-
 public:
     typedef ListIterator<ContentsType> Iterator;
     typedef ListNode<ContentsType> Node;
