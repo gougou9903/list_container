@@ -1,12 +1,12 @@
 // Small project aimed for learning more about templates and STL
 
 #include <iostream>
+#include <exception>
 #include "list.h"
 
 int main() {
     static long int counter = 1;
     try {
-
         List<int> fstList   = List<int>();
         List<int> scndList  = List<int>();
 
@@ -31,11 +31,18 @@ int main() {
             ++counter;
         }
     }
-    catch (const Exception error) {
-        std::cout << error.getDescription() << std::endl;
+    catch (const Exception& error) {
+        std::cout << error.getDescription()
+                  << std::endl;
+    }
+    catch (const std::exception& error) {
+        std::cout << "Standart exception caught: "
+                  << error.what()
+                  << std::endl;
     }
     catch (...) {
-        std::cout << "Caught unknown exception" << std::endl;
+        std::cout << "Caught unknown exception"
+                  << std::endl;
     }
 
     std::cout << "End of test" << std::endl;
