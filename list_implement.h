@@ -154,7 +154,9 @@ void List<ContentsType>::pop_front() {
     ListNode<ContentsType>* newFirstNodePointer = firstNodePointer->nextNodePointer;
     delete firstNodePointer;
     rewriteFirstNodePointer(newFirstNodePointer);
-    newFirstNodePointer->previousNodePointer = NULL;
+    if (newFirstNodePointer != NULL) {
+        newFirstNodePointer->previousNodePointer = NULL;
+    }
 }
 
 template <typename ContentsType>
@@ -166,7 +168,9 @@ void List<ContentsType>::pop_back() {
     ListNode<ContentsType>* newLastNodePointer = lastNodePointer->previousNodePointer;
     delete lastNodePointer;
     rewriteLastNodePointer(newLastNodePointer);
-    newLastNodePointer->nextNodePointer = NULL;
+    if (newLastNodePointer != NULL) {
+        newLastNodePointer->nextNodePointer = NULL;
+    }
 }
 
 template <typename ContentsType>
