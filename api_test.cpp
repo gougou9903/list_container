@@ -32,6 +32,8 @@ int main() {
 }
 
 void test_push_front_and_front() {
+    std::cout << "Testing 'push_front' and 'front'..." << std::endl;
+
     const int DUMMY_VALUE = 0;
 
     uint pushValue = makeBoundedRandomNumber();
@@ -48,6 +50,8 @@ void test_push_front_and_front() {
 }
 
 void test_push_back_and_back() {
+    std::cout << "Testing 'push_back' and 'back'..." << std::endl;
+
     const int DUMMY_VALUE = 0;
 
     uint pushValue = makeBoundedRandomNumber();
@@ -64,6 +68,8 @@ void test_push_back_and_back() {
 }
 
 void test_concat() {
+    std::cout << "Testing 'concat'..." << std::endl;
+
     uint initListSizes = makeBoundedRandomNumber();
 
     std::vector<int> firstVector = makeRandomVector();
@@ -135,6 +141,8 @@ std::vector<int> makeConcatedVector(std::vector<int>& vect1,
 }
 
 void test_empty() {
+    std::cout << "Testing 'empty'..." << std::endl;
+
     List<int> list = List<int>();
 
     if (!list.empty() ) {
@@ -143,9 +151,11 @@ void test_empty() {
 }
 
 void test_clear() {
-    const uint TEST_LIST_SIZE = 10;
+    std::cout << "Testing 'clear'..." << std::endl;
 
-    List<int> list = List<int>(TEST_LIST_SIZE);
+    uint testListSize = makeBoundedRandomNumber();
+
+    List<int> list = List<int>(testListSize);
     list.clear();
 
     if (list.size() != 0) {
@@ -155,6 +165,8 @@ void test_clear() {
 }
 
 void test_size() {
+    std::cout << "Testing 'size'..." << std::endl;
+
     uint wantedSize = makeBoundedRandomNumber();
     List<int> list = List<int>(wantedSize);
     uint actualSize = list.size();
@@ -165,6 +177,8 @@ void test_size() {
 }
 
 void test_iterator_deref_operator() {
+    std::cout << "Testing iterator 'operator*'..." << std::endl;
+
     const uint TEST_LIST_SIZE = 1;
 
     int storedVal = rand();
@@ -177,6 +191,8 @@ void test_iterator_deref_operator() {
 }
 
 void test_iterator_equal_unequal_operators() {
+    std::cout << "Testing iterator 'operator==' and 'operator!='..." << std::endl;
+
     const uint TEST_LIST_SIZE = 1;
 
     int storedVal = rand();
@@ -191,6 +207,8 @@ void test_iterator_equal_unequal_operators() {
 }
 
 void test_iterator_pre_increment_operator() {
+    std::cout << "Testing iterator 'operator++'..." << std::endl;
+
     std::vector<int> vector = makeRandomVector();
     List<int> list = makeListFromVector(vector);
     List<int>::Iterator iter = list.begin();
@@ -210,6 +228,8 @@ void test_iterator_pre_increment_operator() {
 }
 
 void test_iterator_pre_decrement_operator() {
+    std::cout << "Testing iterator 'operator++'..." << std::endl;
+
     std::vector<int> vector = makeRandomVector();
     List<int> list = makeListFromVector(vector);
     List<int>::Iterator iter = list.end();
