@@ -164,12 +164,28 @@ private:
     void rewriteFirstNodePointer(Node* newNode);
     void rewriteLastNodePointer(Node* newNode);
 
+    void connectNodes(Node* myNode, Node* newNode);
+
     void deleteNode(Node*);
-    void insertNewNodeBeforeExistingNode(ListNode<ContentsType>* newNode,
-                                         ListNode<ContentsType>* existingNode);
+
+    void insertNode(ListNode<ContentsType>* newNode,
+                    bool insertOrder,
+                    ListNode<ContentsType>* existingNode);
+    void insertNodeToNotEmptyList(  ListNode<ContentsType>* newNode,
+                                    bool insertOrder,
+                                    ListNode<ContentsType>* existingNode);
+    void insertOneNodeBeforeAnother(ListNode<ContentsType>* newNode,
+                                    ListNode<ContentsType>* subsequentNode);
 
     Node* firstNodePointer;
     Node* lastNodePointer;
+
+    ListNode<ContentsType>* END_OF_LIST = NULL;
+    ListNode<ContentsType>* START_OF_LIST = NULL;
+    ListNode<ContentsType>* LIST_BORDER = NULL;
+
+    static const bool INSERT_BEFORE    = true;
+    static const bool INSERT_AFTER     = false;
 };
 
 #include "list_implement.h"
