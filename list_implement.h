@@ -55,11 +55,7 @@ ContentsType& List<ContentsType>::front() {
 
 template <typename ContentsType>
 const ContentsType& List<ContentsType>::front() const {
-    if (empty() ) {
-        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
-    }
-
-    return firstNodePointer->value;
+    return front();
 }
 
 template <typename ContentsType>
@@ -73,11 +69,7 @@ ContentsType& List<ContentsType>::back() {
 
 template <typename ContentsType>
 const ContentsType& List<ContentsType>::back() const {
-    if (empty() ) {
-        throw Exception("Attempted to access non-exsistent node", __FILE__, __LINE__);
-    }
-
-    return lastNodePointer->value;
+    return back();
 }
 
 template <typename ContentsType>
