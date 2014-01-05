@@ -82,6 +82,7 @@ void test_concat() {
     firstList.concat(secondList);
 
     uint concatedVectorSize = concatedVector.size();
+
     for (uint i = 0; i < concatedVectorSize; ++i) {
         if (firstList.front() != concatedVector[i]) {
             throw Exception("ERROR - 'concat' test failed: elements order or value doesn't match", __FILE__, __LINE__);
@@ -169,6 +170,7 @@ void test_size() {
 
     uint wantedSize = makeBoundedRandomNumber();
     List<int> list = List<int>(wantedSize);
+
     uint actualSize = list.size();
 
     if (wantedSize != actualSize) {
@@ -222,7 +224,7 @@ void test_iterator_pre_increment_operator() {
         }
 
         if (iter != listEnd) {
-            iter = ++iter;
+            ++iter;
         }
     }
 }
