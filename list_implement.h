@@ -142,11 +142,9 @@ void List<ContentsType>::insertNodeToNotEmptyList(ListNode<ContentsType>* newNod
 
     switch (insertOrder) {
         case INSERT_BEFORE:
-            // precedingNode = newNode;
             subsequentNode = existingNode;
             break;
         case INSERT_AFTER:
-            // precedingNode = existingNode;
             if (existingNode == END_OF_LIST) {
                 subsequentNode = END_OF_LIST;
             }
