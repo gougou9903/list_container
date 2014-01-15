@@ -36,7 +36,7 @@ void test_push_front_and_front() {
 
     const int DUMMY_VALUE = 0;
 
-    uint pushValue = makeBoundedRandomNumber();
+    uint pushValue = limitedPositiveRand();
 
     List<int> testList = List<int>();
     testList.push_front(DUMMY_VALUE);
@@ -54,7 +54,7 @@ void test_push_back_and_back() {
 
     const int DUMMY_VALUE = 0;
 
-    uint pushValue = makeBoundedRandomNumber();
+    uint pushValue = limitedPositiveRand();
 
     List<int> testList = List<int>();
     testList.push_back(DUMMY_VALUE);
@@ -70,7 +70,7 @@ void test_push_back_and_back() {
 void test_concat() {
     std::cout << "Testing 'concat'..." << std::endl;
 
-    uint initListSizes = makeBoundedRandomNumber();
+    uint initListSizes = limitedPositiveRand();
 
     std::vector<int> firstVector = makeRandomVector();
     std::vector<int> secondVector = makeRandomVector();
@@ -96,7 +96,7 @@ void test_concat() {
 }
 
 std::vector<int> makeRandomVector() {
-    uint vectSize = makeBoundedRandomNumber();
+    uint vectSize = limitedPositiveRand();
     std::vector<int> vect(vectSize);
 
     uint size = vect.size();
@@ -107,7 +107,7 @@ std::vector<int> makeRandomVector() {
     return vect;
 }
 
-uint makeBoundedRandomNumber() {
+uint limitedPositiveRand() {
     const uint RAND_HIGH_BORDER = 1000;
 
     return rand() % RAND_HIGH_BORDER + 1;
@@ -154,7 +154,7 @@ void test_empty() {
 void test_clear() {
     std::cout << "Testing 'clear'..." << std::endl;
 
-    uint testListSize = makeBoundedRandomNumber();
+    uint testListSize = limitedPositiveRand();
 
     List<int> list = List<int>(testListSize);
     list.clear();
@@ -168,7 +168,7 @@ void test_clear() {
 void test_size() {
     std::cout << "Testing 'size'..." << std::endl;
 
-    uint wantedSize = makeBoundedRandomNumber();
+    uint wantedSize = limitedPositiveRand();
     List<int> list = List<int>(wantedSize);
 
     uint actualSize = list.size();

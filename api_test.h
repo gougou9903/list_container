@@ -10,7 +10,7 @@ void test_size();
 std::vector<int> makeRandomVector();
 List<int> makeListFromVector(std::vector<int>& vect);
 std::vector<int> makeConcatedVector(std::vector<int>& vect1, std::vector<int>& vect2);
-uint makeBoundedRandomNumber();
+uint limitedPositiveRand();
 
 void test_iterator_deref_operator();
 void test_iterator_equal_unequal_operators();
