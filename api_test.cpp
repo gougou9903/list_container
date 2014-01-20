@@ -20,12 +20,11 @@ int main() {
         std::cout << "SUCCESS: All tests completed"
                   << std::endl;
     }
-    catch (const Exception error) {
-        std::cout << error.getDescription()
-                  << std::endl;
+    catch (const Exception& error) {
+        error.print();
     }
     catch (const std::exception& error) {
-        std::cout << "Standart exception caught: "
+        std::cerr << "Standart exception caught: "
                   << error.what()
                   << std::endl;
     }
